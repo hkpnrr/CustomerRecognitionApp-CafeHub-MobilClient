@@ -1,4 +1,4 @@
-package com.project.cafehub.Models
+package com.project.cafehub.model
 
 import java.util.Date
 

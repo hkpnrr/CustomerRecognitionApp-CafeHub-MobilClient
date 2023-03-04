@@ -1,4 +1,4 @@
-package com.project.cafehub
+package com.project.cafehub.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

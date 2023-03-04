@@ -49,9 +49,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun signUpClicked(view: View) {
-        /*val intent = Intent(this, SignUpActivity::class.java)
+        val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
-        finish()*/
+        finish()
     }
 
     fun forgotPassword(view: View) {
