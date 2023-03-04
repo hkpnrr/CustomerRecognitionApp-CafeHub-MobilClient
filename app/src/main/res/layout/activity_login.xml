@@ -4,15 +4,189 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".view.LoginActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/logoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cafehub_color_logo"
+        android:layout_marginTop="50dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="250dp"
+        android:maxHeight="60dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/emailHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="@id/emailText"
+        app:layout_constraintBottom_toTopOf="@id/emailText" />
+
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="284dp"
+        android:layout_height="47dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="example@gmail.com"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:rotationY="0"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoView"
+        android:layout_marginTop="80dp"/>
+
+    <TextView
+        android:id="@+id/passwordHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="@id/passwordText"
+        app:layout_constraintBottom_toTopOf="@id/passwordText" />
+
+    <EditText
+        android:id="@+id/passwordText"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
+        android:layout_width="284dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:inputType="textPersonName"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:rotationY="0"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <TextView
+        android:id="@+id/forgetView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:onClick="forgotPassword"
+        android:text="Forgot Password?"
+        app:layout_constraintEnd_toEndOf="@id/passwordText"
+        app:layout_constraintTop_toBottomOf="@id/passwordText"
+        android:focusable="true" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/teal_700"
+        android:onClick="loginClicked"
+        android:text="LOGIN"
+        app:layout_constraintEnd_toEndOf="@id/passwordText"
+        app:layout_constraintStart_toStartOf="@id/passwordText"
+        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/loginButton"
+        app:layout_constraintStart_toStartOf="@id/loginButton"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        android:layout_marginTop="40dp">
+        <View
+            android:layout_width="109dp"
+            android:layout_height="2dp"
+            android:background="#D17842"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Or With "
+            android:textSize="18sp"/>
+        <View
+            android:layout_width="109dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="#D17842" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/signUpSpotify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:onClick="signUpSpotifyClicked"
+        android:text="Sign Up with Spotify"
+        android:drawableLeft="@drawable/spotify_logo"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/loginButton"
+        app:layout_constraintStart_toStartOf="@id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <Button
+        android:id="@+id/signUpGoogle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/google_logo"
+        android:backgroundTint="@color/white"
+        android:onClick="signUpGoogleClicked"
+        android:text="Sign Up with Google"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/signUpSpotify"
+        app:layout_constraintStart_toStartOf="@id/signUpSpotify"
+        app:layout_constraintTop_toBottomOf="@+id/signUpSpotify" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account?"
+            android:gravity="center_vertical|right"
+            android:layout_weight="1"
+            android:textSize="19sp"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Sign Up"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:textColor="#D17842"
+            android:clickable="true"
+            android:onClick="signUpClicked" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
