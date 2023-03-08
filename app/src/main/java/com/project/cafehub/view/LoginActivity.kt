@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.passwordText.text.toString()
 
         if(email.equals("") || password.equals("")) {
-            Toast.makeText(this, "Enter email and password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "E-Posta ve Parola Giriniz!", Toast.LENGTH_SHORT).show()
         } else {
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                 val intent = Intent(this, HomePageActivity::class.java)
