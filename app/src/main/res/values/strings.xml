@@ -4,9 +4,9 @@
     <string name="example_gmail_com">example@gmail.com</string>
     <string name="password">Parola</string>
     <string name="sign_up_with_spotify">Spotify ile Giriş Yap</string>
-    <string name="or_with">Veya</string>
-    <string name="sign_up">KAYDOL</string>
-    <string name="forgot_password">Parolanızı Mı Unuttunuz?</string>
+    <string name="or_with">\u0020Veya\u0020</string>
+    <string name="sign_up">\u0020KAYDOL</string>
+    <string name="forgot_password">Parolanızı mı Unuttunuz?</string>
     <string name="enter_your_password">Parolanızı Girin</string>
     <string name="don_t_have_an_account">Hesabınız yok mu?</string>
     <string name="sign_up_with_google">Google ile Giriş Yap</string>

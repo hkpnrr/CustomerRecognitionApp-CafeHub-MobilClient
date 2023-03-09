@@ -110,7 +110,7 @@
         app:layout_constraintTop_toBottomOf="@id/loginButton"
         android:layout_marginTop="40dp">
         <View
-            android:layout_width="109dp"
+            android:layout_width="118dp"
             android:layout_height="2dp"
             android:background="#D17842"
             android:layout_weight="1"/>
@@ -120,7 +120,7 @@
             android:text="@string/or_with"
             android:textSize="18sp"/>
         <View
-            android:layout_width="109dp"
+            android:layout_width="118dp"
             android:layout_height="2dp"
             android:layout_weight="1"
             android:background="#D17842" />

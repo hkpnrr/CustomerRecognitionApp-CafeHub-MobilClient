@@ -1,6 +1,10 @@
 package com.project.cafehub.model
-
+import java.io.Serializable
 import java.util.Date
 
-class User(val id:String,val email:String,val name:String,val surname:String,val birthdate:Date) {
+data class User(val id: String? = null,
+                val name:String? = null,
+                val surname:String? = null,
+                val email:String? = null,
+                val birthdate:Date? = null) : Serializable {
 }

@@ -25,7 +25,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     fun sendEmailClicked(view: View) {
         auth.sendPasswordResetEmail(binding.emailText.text.toString()).addOnSuccessListener {
-            Toast.makeText(this, "Parola sıfırlama linki e-postanıza gönderildi. ", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Parola sıfırlama linki e-postanıza gönderildi.", Toast.LENGTH_LONG).show()
         }.addOnFailureListener {
             Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
         }

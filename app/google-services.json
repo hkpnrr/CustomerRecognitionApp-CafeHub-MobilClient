@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "205195076349-fpar14lra0vufrpt9e8shjp3ame179dt.apps.googleusercontent.com",
+          "client_id": "205195076349-ejnhho0p08mkkvsiho7mkehrh8chs321.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.cafehub",
+            "certificate_hash": "1eaa9817ba66472c5f384a932e89e45e6233dd6c"
+          }
+        },
+        {
+          "client_id": "205195076349-bfkr09n8a6uagmrlvtk707dlvf4kt7dl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "205195076349-fpar14lra0vufrpt9e8shjp3ame179dt.apps.googleusercontent.com",
+              "client_id": "205195076349-bfkr09n8a6uagmrlvtk707dlvf4kt7dl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
