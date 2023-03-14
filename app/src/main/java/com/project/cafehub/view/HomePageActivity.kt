@@ -23,6 +23,9 @@ class HomePageActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         replaceFragment(HomeFragment())
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
 
         auth = FirebaseAuth.getInstance()
         //val user = intent.extras?.getSerializable("userModel") as User
@@ -37,6 +40,10 @@ class HomePageActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     fun replaceFragment(fragment: Fragment) {
@@ -48,23 +55,15 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_actionbar, menu)
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
         val id = item.itemId
-
-        if (id == R.id.add) {
-            Toast.makeText(this, "Item One Clicked", Toast.LENGTH_LONG).show()
-            return true
-        }
-        if (id == R.id.reset) {
-            Toast.makeText(this, "Item Two Clicked", Toast.LENGTH_LONG).show()
-            return true
-        }
-        if(id==android.R.id.home){
+        
+        if(id==R.id.profile){
             val intent = Intent(this@HomePageActivity,LoginActivity::class.java)
             startActivity(intent)
             return true;
