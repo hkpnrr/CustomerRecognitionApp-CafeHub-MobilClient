@@ -17,6 +17,9 @@
             android:name=".view.ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".view.CafeActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.SignupActivity"
             android:exported="false" />
         <activity
