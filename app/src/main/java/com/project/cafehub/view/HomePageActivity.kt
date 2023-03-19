@@ -41,9 +41,11 @@ class HomePageActivity : AppCompatActivity() {
             true
         }
 
-        binding.toolbar.setNavigationOnClickListener {
+        /*binding.toolbar.setNavigationOnClickListener {
             finish()
-        }
+        }*/
+
+        binding.toolbar.navigationIcon=null
     }
 
     fun replaceFragment(fragment: Fragment) {
@@ -64,7 +66,7 @@ class HomePageActivity : AppCompatActivity() {
         val id = item.itemId
         
         if(id==R.id.profile){
-            val intent = Intent(this@HomePageActivity,LoginActivity::class.java)
+            val intent = Intent(this@HomePageActivity,ProfileActivity::class.java)
             startActivity(intent)
             return true;
         }
