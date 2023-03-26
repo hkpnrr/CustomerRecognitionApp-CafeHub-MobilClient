@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.project.cafehub.R
 import com.project.cafehub.databinding.RowCafeBinding
 import com.project.cafehub.model.Cafe
 import com.project.cafehub.view.CafeActivity
@@ -28,6 +29,11 @@ class CafeAdapter(val cafeList: ArrayList<Cafe>): RecyclerView.Adapter<CafeAdapt
             val intent = Intent(holder.itemView.context, CafeActivity::class.java)
             intent.putExtra("cafe", cafeList.get(position))
             holder.itemView.context.startActivity(intent)
+        }
+        if (position == 0) {
+            holder.itemView.setBackgroundResource(R.drawable.round_corner_top)
+        } else if (position == itemCount-1) {
+            holder.itemView.setBackgroundResource(R.drawable.round_corner_bottom)
         }
     }
 
