@@ -33,27 +33,32 @@ class SignupActivity : AppCompatActivity() {
         auth = Firebase.auth
         firestore = Firebase.firestore
 
+
+        initBirthdate()
+
+    }
+
+
+    private fun initBirthdate(){
         var signupOpr:SignupOpr = SignupOpr()
 
         val today = Calendar.getInstance()
         binding.datePickerBirthdate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)) { view, year, month, day ->
-                birthDay=day
-                birthMonth=month+1
-                birthYear=year
+            birthDay=day
+            birthMonth=month+1
+            birthYear=year
 
-                val age=signupOpr.getAge(birthDay!!, birthMonth!!, birthYear!!)
-                if(age<1){
-                  date=""
-                  Toast.makeText(this,"Lütfen uygun bir tarih seçiniz",Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    date = (day.toString() + "-" + (month + 1) + "-" + year)
-                }
+            val age=signupOpr.getAge(birthDay!!, birthMonth!!, birthYear!!)
+            if(age<1){
+                date=""
+                Toast.makeText(this,"Lütfen uygun bir tarih seçiniz",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                date = (day.toString() + "-" + (month + 1) + "-" + year)
+            }
         }
-
     }
-
     fun signupClicked(view:View){
 
         val email = binding.editTextEmailAddress.text.toString()

@@ -24,19 +24,11 @@ class CafeActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
-
-        currentCafe = (intent.getSerializableExtra("cafe") as Cafe?)!!
-
-
         replaceFragment(CafeMenuFragment())
 
-        Picasso.get().load(currentCafe.imageUrl).into(binding.cafeImage)
-        binding.textViewCafeName.text=currentCafe.name
+        initToolbar()
+
+        displayCurrentCafeInfo()
 
         binding.navigationBar.setOnItemSelectedListener {
             when (it.itemId) {
@@ -51,6 +43,19 @@ class CafeActivity : AppCompatActivity() {
 
     }
 
+    private fun displayCurrentCafeInfo(){
+        currentCafe = (intent.getSerializableExtra("cafe") as Cafe?)!!
+        Picasso.get().load(currentCafe.imageUrl).into(binding.cafeImage)
+        binding.textViewCafeName.text=currentCafe.name
+    }
+
+    private fun initToolbar(){
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+    }
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

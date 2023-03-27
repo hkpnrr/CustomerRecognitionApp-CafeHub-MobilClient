@@ -10,6 +10,9 @@ import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityHomePageBinding
 import com.project.cafehub.databinding.ActivityProfileBinding
+import com.project.cafehub.model.CurrentUser
+import com.squareup.picasso.Picasso
+import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -22,13 +25,25 @@ class ProfileActivity : AppCompatActivity() {
 
         auth=Firebase.auth
 
+        initToolbar()
+
+        displayUserInfo()
+
+    }
+
+    private fun initToolbar(){
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+    }
+    private fun displayUserInfo(){
+        Picasso.get().load(CurrentUser.user.photoUrl).into(binding.userPhoto)
 
+        binding.userName.text= (CurrentUser.user.name?.capitalize(Locale.ROOT)) +
+                " " + (CurrentUser.user.surname?.capitalize(Locale.ROOT))
     }
     fun redirectToProfileSettings(view:View){
         val intent = Intent(this@ProfileActivity,ProfileActivity::class.java)

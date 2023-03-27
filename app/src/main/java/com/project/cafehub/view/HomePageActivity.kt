@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityHomePageBinding
+import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
 
 class HomePageActivity : AppCompatActivity() {
@@ -23,9 +24,8 @@ class HomePageActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         replaceFragment(HomeFragment())
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        initToolbar()
 
         auth = FirebaseAuth.getInstance()
         //val user = intent.extras?.getSerializable("userModel") as User
@@ -34,13 +34,18 @@ class HomePageActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.qr -> replaceFragment(QrFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.profile -> replaceFragment(QrFragment())
 
                 else -> {}
             }
             true
         }
 
+    }
+
+    private fun initToolbar(){
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbar.navigationIcon=null
     }
 

@@ -15,10 +15,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityLoginBinding
+import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var gsc: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
+    private lateinit var db:FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +45,35 @@ class LoginActivity : AppCompatActivity() {
             .build()
         gsc = GoogleSignIn.getClient(this, gso)
 
+        db = Firebase.firestore
+
+        checkCurrentUser()
+    }
+
+    private fun checkCurrentUser(){
         val currentUser = auth.currentUser
         if(currentUser != null) {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
-            finish()
+            //fill CurrentUser properties
+
+            db.collection("User").whereEqualTo("email",currentUser.email).get()
+                .addOnSuccessListener { documents->
+                    for(document in documents){
+                        //CurrentUser.user.birthdate= document.data.get("birthdate") as Date?
+                        CurrentUser.user.email= document.data["email"] as String?
+                        CurrentUser.user.photoUrl= document.data["photoUrl"] as String?
+                        CurrentUser.user.name= document.data["name"] as String?
+                        CurrentUser.user.surname= document.data["surname"] as String?
+                        CurrentUser.user.id= document.data["id"] as String?
+                    }
+
+                    val intent = Intent(this, HomePageActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
+                }.addOnFailureListener {exception->
+                    Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+
         }
     }
 
@@ -56,9 +85,25 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "E-Posta ve Parola Giriniz!", Toast.LENGTH_SHORT).show()
         } else {
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-                val intent = Intent(this, HomePageActivity::class.java)
-                startActivity(intent)
-                finish()
+                // fill currentUser properties
+                db.collection("User").whereEqualTo("email",email).get()
+                    .addOnSuccessListener { documents->
+                        for(document in documents){
+                            //CurrentUser.user.birthdate= document.data.get("birthdate") as Date?
+                            CurrentUser.user.email= document.data.get("email") as String?
+                            CurrentUser.user.photoUrl= document.data.get("photoUrl") as String?
+                            CurrentUser.user.name= document.data.get("name") as String?
+                            CurrentUser.user.surname= document.data.get("surname") as String?
+                            CurrentUser.user.id= document.data.get("id") as String?
+                        }
+
+                        val intent = Intent(this, HomePageActivity::class.java)
+                        startActivity(intent)
+                        finish()
+
+                    }.addOnFailureListener {exception->
+                        Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                    }
             }.addOnFailureListener {
                 Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
             }
@@ -105,8 +150,12 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
+
+                //fill CurrentUser properties
+
                 val intent: Intent = Intent(this, HomePageActivity::class.java)
                 val user = User(account.id, account.displayName, null, account.email, null)
+                CurrentUser.user = user
                 intent.putExtra("userModel", user)
                 startActivity(intent)
             } else {
