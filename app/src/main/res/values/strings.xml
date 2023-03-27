@@ -26,4 +26,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="intro">Etrafındaki kafeleri keşfet!</string>
     <string name="get_advice">Tavsiye Al</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

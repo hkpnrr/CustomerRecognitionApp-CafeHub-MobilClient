@@ -41,10 +41,6 @@ class HomePageActivity : AppCompatActivity() {
             true
         }
 
-        /*binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }*/
-
         binding.toolbar.navigationIcon=null
     }
 

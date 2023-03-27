@@ -52,7 +52,8 @@ class HomeFragment : Fragment() {
                 val name = document.get("name") as String
                 val address = document.get("address") as String
                 val imageUrl = document.get("imageUrl") as String
-                val cafe = Cafe(name, address, imageUrl)
+                val id = document.id
+                val cafe = Cafe(id,name, address, imageUrl)
 
                 cafeList.add(cafe)
             }
