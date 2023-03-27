@@ -10,7 +10,9 @@ data class Cafe(val id: String? = null,
 }
 */
 
-data class Cafe(val name: String? = null,
-                val address: String? = null,
-                val imageUrl: String? = null) : Serializable {
+data class Cafe(
+    var id:String?=null,
+    var name: String? = null,
+    var address: String? = null,
+    var imageUrl: String? = null) : Serializable {
 }
