@@ -7,6 +7,6 @@ data class User(
     var name:String? = null,
     var surname:String? = null,
     var email:String? = null,
-    var birthdate:Date? = null,
+    var birthdate:String? = null,
     var photoUrl:String?=null) : Serializable {
 }

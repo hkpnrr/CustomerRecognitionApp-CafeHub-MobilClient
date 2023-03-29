@@ -81,8 +81,8 @@ class SignupActivity : AppCompatActivity() {
                         "surname" to surname,
                         "birthdate" to birthdate
                     )
-                    firestore.collection("User")
-                        .add(newUser)
+                    firestore.collection("User").document(auth.currentUser?.uid.toString())
+                        .set(newUser)
                         .addOnSuccessListener {
                             Toast.makeText(this,"Kullanıcı Kaydedildi",Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@SignupActivity,LoginActivity::class.java)

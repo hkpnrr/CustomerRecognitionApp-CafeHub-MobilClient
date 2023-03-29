@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                         CurrentUser.user.name= document.data["name"] as String?
                         CurrentUser.user.surname= document.data["surname"] as String?
                         CurrentUser.user.id= document.data["id"] as String?
+                        CurrentUser.user.birthdate= document.data["birthdate"] as String?
                     }
 
                     val intent = Intent(this, HomePageActivity::class.java)
@@ -95,6 +96,7 @@ class LoginActivity : AppCompatActivity() {
                             CurrentUser.user.name= document.data.get("name") as String?
                             CurrentUser.user.surname= document.data.get("surname") as String?
                             CurrentUser.user.id= document.data.get("id") as String?
+                            CurrentUser.user.birthdate= document.data["birthdate"] as String?
                         }
 
                         val intent = Intent(this, HomePageActivity::class.java)

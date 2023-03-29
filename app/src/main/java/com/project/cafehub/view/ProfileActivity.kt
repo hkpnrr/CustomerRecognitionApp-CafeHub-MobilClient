@@ -39,6 +39,11 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        displayUserInfo()
+    }
     private fun displayUserInfo(){
         Picasso.get().load(CurrentUser.user.photoUrl).into(binding.userPhoto)
 
@@ -46,7 +51,7 @@ class ProfileActivity : AppCompatActivity() {
                 " " + (CurrentUser.user.surname?.capitalize(Locale.ROOT))
     }
     fun redirectToProfileSettings(view:View){
-        val intent = Intent(this@ProfileActivity,ProfileActivity::class.java)
+        val intent = Intent(this@ProfileActivity,ProfileSettingsActivity::class.java)
         startActivity(intent)
     }
     fun redirectToHistory(view:View){
