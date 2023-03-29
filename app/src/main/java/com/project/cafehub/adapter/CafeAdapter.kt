@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.cafehub.R
 import com.project.cafehub.databinding.RowCafeBinding
 import com.project.cafehub.model.Cafe
-import com.project.cafehub.view.CafeActivity
+import com.project.cafehub.view.cafe.CafeActivity
 import com.squareup.picasso.Picasso
 
 class CafeAdapter(val cafeList: ArrayList<Cafe>): RecyclerView.Adapter<CafeAdapter.CafeHolder>() {

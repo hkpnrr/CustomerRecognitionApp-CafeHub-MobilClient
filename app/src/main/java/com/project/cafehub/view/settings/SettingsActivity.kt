@@ -1,29 +1,28 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.settings
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.project.cafehub.R
-import com.project.cafehub.databinding.ActivityHomePageBinding
-import com.project.cafehub.databinding.ActivityProfileBinding
+import com.project.cafehub.databinding.ActivitySettingsBinding
 import com.project.cafehub.model.CurrentUser
+import com.project.cafehub.view.authentication.LoginActivity
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class ProfileActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileBinding
+class SettingsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingsBinding
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileBinding.inflate(layoutInflater)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        auth=Firebase.auth
+        auth= Firebase.auth
 
         initToolbar()
 
@@ -50,26 +49,26 @@ class ProfileActivity : AppCompatActivity() {
         binding.userName.text= (CurrentUser.user.name?.capitalize(Locale.ROOT)) +
                 " " + (CurrentUser.user.surname?.capitalize(Locale.ROOT))
     }
-    fun redirectToProfileSettings(view:View){
-        val intent = Intent(this@ProfileActivity,ProfileSettingsActivity::class.java)
+    fun redirectToProfileSettings(view: View){
+        val intent = Intent(this@SettingsActivity, ProfileSettingsActivity::class.java)
         startActivity(intent)
     }
-    fun redirectToHistory(view:View){
-        val intent = Intent(this@ProfileActivity,ProfileActivity::class.java)
+    fun redirectToHistory(view: View){
+        val intent = Intent(this@SettingsActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
-    fun redirectToFriends(view:View){
-        val intent = Intent(this@ProfileActivity,ProfileActivity::class.java)
+    fun redirectToFriends(view: View){
+        val intent = Intent(this@SettingsActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
-    fun redirectToAppSettings(view:View){
-        val intent = Intent(this@ProfileActivity,ProfileActivity::class.java)
+    fun redirectToAppSettings(view: View){
+        val intent = Intent(this@SettingsActivity, SettingsActivity::class.java)
         startActivity(intent)
     }
 
     fun logout(view: View){
         auth.signOut()
-        val intent = Intent(this@ProfileActivity,LoginActivity::class.java);
+        val intent = Intent(this@SettingsActivity, LoginActivity::class.java);
         startActivity(intent)
         finish()
     }

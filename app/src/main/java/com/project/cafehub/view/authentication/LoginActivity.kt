@@ -1,4 +1,4 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.authentication
 
 import android.app.Activity
 import android.content.Intent
@@ -22,7 +22,7 @@ import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityLoginBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
-import java.util.*
+import com.project.cafehub.view.homePage.HomePageActivity
 
 class LoginActivity : AppCompatActivity() {
 

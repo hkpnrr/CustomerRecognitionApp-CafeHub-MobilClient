@@ -1,11 +1,10 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.homePage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -13,7 +12,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.project.cafehub.R
 import com.project.cafehub.adapter.CafeAdapter
 import com.project.cafehub.databinding.FragmentHomeBinding
 import com.project.cafehub.model.Cafe
@@ -53,7 +51,7 @@ class HomeFragment : Fragment() {
                 val address = document.get("address") as String
                 val imageUrl = document.get("imageUrl") as String
                 val id = document.id
-                val cafe = Cafe(id,name, address, imageUrl)
+                val cafe = Cafe(id, name, address, imageUrl)
 
                 cafeList.add(cafe)
             }

@@ -1,17 +1,15 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.homePage
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityHomePageBinding
-import com.project.cafehub.model.CurrentUser
-import com.project.cafehub.model.User
+import com.project.cafehub.view.settings.SettingsActivity
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -65,9 +63,9 @@ class HomePageActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
         val id = item.itemId
-        
-        if(id==R.id.profile){
-            val intent = Intent(this@HomePageActivity,ProfileActivity::class.java)
+
+        if(id== R.id.profile){
+            val intent = Intent(this@HomePageActivity, SettingsActivity::class.java)
             startActivity(intent)
             return true;
         }

@@ -1,7 +1,8 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.cafe
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -9,13 +10,11 @@ import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityCafeBinding
 import com.project.cafehub.model.Cafe
 import com.squareup.picasso.Picasso
-import androidx.fragment.app.Fragment
-
 
 class CafeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCafeBinding
     private lateinit var db: FirebaseFirestore
-    private lateinit var currentCafe:Cafe
+    private lateinit var currentCafe: Cafe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCafeBinding.inflate(layoutInflater)

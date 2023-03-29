@@ -1,21 +1,18 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.settings
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Media
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -36,7 +33,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-    var selectedBitmap:Bitmap?=null
+    var selectedBitmap: Bitmap?=null
     var selectedPicture: Uri?=null
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -49,7 +46,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
         setContentView(view)
 
         auth = Firebase.auth
-        db =Firebase.firestore
+        db = Firebase.firestore
         storage = Firebase.storage
         initToolbar()
         registerLauncher()
@@ -79,7 +76,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
         splitBirthdate?.let { binding.datePickerBirthdate.updateDate(it[2].toInt(),it[1].toInt()-1,it[0].toInt()) }
     }
 
-    fun update(view:View){
+    fun update(view: View){
 
         if(selectedPicture!=null){
             val uuid = UUID.randomUUID()
@@ -99,16 +96,16 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
                     }.addOnFailureListener {
 
-                        Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
                     }
                 }.addOnFailureListener {
 
-                    Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
                 }
 
 
             }.addOnFailureListener{
-                Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -121,7 +118,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 //change CurrentUser name
                 CurrentUser.user.name=updatedName
             }.addOnFailureListener {
-                Toast.makeText(this,it.localizedMessage,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -134,7 +131,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 //change CurrentUser surname
                 CurrentUser.user.surname=updatedSurname
             }.addOnFailureListener {
-                Toast.makeText(this,it.localizedMessage,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -144,10 +141,22 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
     fun selectImage(view: View){
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
-            if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_MEDIA_IMAGES) !=PackageManager.PERMISSION_GRANTED){
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_MEDIA_IMAGES)){
-                    Snackbar.make(view,"Galeriye erişmek için izin gerekli.",Snackbar.LENGTH_INDEFINITE).setAction("İzin ver",View.OnClickListener {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                ) != PackageManager.PERMISSION_GRANTED
+            ){
+                if(ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.READ_MEDIA_IMAGES
+                    )
+                ){
+                    Snackbar.make(
+                        view,
+                        "Galeriye erişmek için izin gerekli.",
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("İzin ver", View.OnClickListener {
                         permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
                     }).show()
                 }
@@ -156,14 +165,27 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 }
             }
             else{
-                val intentToGallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val intentToGallery =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 activityResultLauncher.launch(intentToGallery)
             }
         }
         else{
-            if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) !=PackageManager.PERMISSION_GRANTED){
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-                    Snackbar.make(view,"Galeriye erişmek için izin gerekli.",Snackbar.LENGTH_INDEFINITE).setAction("İzin ver",View.OnClickListener {
+            if(ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ){
+                if(ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                ){
+                    Snackbar.make(
+                        view,
+                        "Galeriye erişmek için izin gerekli.",
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction("İzin ver", View.OnClickListener {
                         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                     }).show()
                 }
@@ -172,7 +194,8 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 }
             }
             else{
-                val intentToGallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val intentToGallery =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 activityResultLauncher.launch(intentToGallery)
             }
         }
@@ -180,7 +203,7 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
     fun registerLauncher(){
 
-        activityResultLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
+        activityResultLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
 
             if(result.resultCode== RESULT_OK){
                 val intentFromResult = result.data
@@ -210,13 +233,14 @@ class ProfileSettingsActivity : AppCompatActivity() {
             }
         }
 
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){result->
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){ result->
             if(result){
-                val intentToGallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val intentToGallery =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 activityResultLauncher.launch(intentToGallery)
             }
             else{
-                Toast.makeText(this@ProfileSettingsActivity,"İzin gerekli.",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ProfileSettingsActivity, "İzin gerekli.", Toast.LENGTH_LONG).show()
             }
         }
     }

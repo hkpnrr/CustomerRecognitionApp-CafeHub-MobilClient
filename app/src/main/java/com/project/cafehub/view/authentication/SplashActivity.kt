@@ -1,4 +1,4 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.authentication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
