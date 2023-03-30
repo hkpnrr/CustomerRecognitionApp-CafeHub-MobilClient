@@ -67,7 +67,7 @@
         android:drawablePadding="12dp"
         android:ems="10"
         android:hint="@string/enter_your_password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:rotationY="0"

@@ -18,6 +18,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore:FirebaseFirestore
+    private lateinit var signupOpr: SignupOpr
 
     var date: String =""
     var birthDay: Int? = null
@@ -33,6 +34,8 @@ class SignupActivity : AppCompatActivity() {
         auth = Firebase.auth
         firestore = Firebase.firestore
 
+        signupOpr = SignupOpr()
+
 
         initBirthdate()
 
@@ -40,7 +43,6 @@ class SignupActivity : AppCompatActivity() {
 
 
     private fun initBirthdate(){
-        var signupOpr:SignupOpr = SignupOpr()
 
         val today = Calendar.getInstance()
         binding.datePickerBirthdate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
@@ -68,35 +70,44 @@ class SignupActivity : AppCompatActivity() {
         val birthdate = date
 
 
+
+
         if(email == "" || password == "" || name == "" || surname == "" || birthdate == ""){
             Toast.makeText(this,"E-Posta ve Parola Giriniz!",Toast.LENGTH_SHORT).show()
         }else{
 
-            auth.createUserWithEmailAndPassword(email,password)
-                .addOnSuccessListener {
-                    val newUser = hashMapOf(
-                        "id" to auth.currentUser?.uid.toString(),
-                        "email" to email,
-                        "name" to name,
-                        "surname" to surname,
-                        "birthdate" to birthdate
-                    )
-                    firestore.collection("User").document(auth.currentUser?.uid.toString())
-                        .set(newUser)
-                        .addOnSuccessListener {
-                            Toast.makeText(this,"Kullanıcı Kaydedildi",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-                            startActivity(intent);
-                            finish()
-                        }
-                        .addOnFailureListener{
-                            Toast.makeText(this,it.localizedMessage,Toast.LENGTH_SHORT).show()
-                        }
+            if(signupOpr.isValidPassword(password)) {
 
-                }
-                .addOnFailureListener{
-                    Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
-                }
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+                        val newUser = hashMapOf(
+                            "id" to auth.currentUser?.uid.toString(),
+                            "email" to email,
+                            "name" to name,
+                            "surname" to surname,
+                            "birthdate" to birthdate
+                        )
+                        firestore.collection("User").document(auth.currentUser?.uid.toString())
+                            .set(newUser)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Kullanıcı Kaydedildi", Toast.LENGTH_SHORT)
+                                    .show()
+                                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                                startActivity(intent);
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                            }
+
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                    }
+            }
+            else{
+                Toast.makeText(this, "Uygun parola seçiniz", Toast.LENGTH_LONG).show()
+            }
         }
 
     }

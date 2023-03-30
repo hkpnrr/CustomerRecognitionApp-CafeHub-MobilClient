@@ -7,8 +7,8 @@
     tools:context=".view.settings.ProfileSettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:id="@+id/toolbarProfileSettings"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#E1D9D9"
         android:layout_gravity="center"
@@ -31,11 +31,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarProfileSettings">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,21 +50,38 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_marginTop="40dp">
-
-                <ImageView
-                    android:id="@+id/userPhoto"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/cafehub_color_logo"
-                    android:layout_marginTop="50dp"
-                    android:adjustViewBounds="true"
-                    android:maxWidth="250dp"
-                    android:maxHeight="60dp"
-                    android:scaleType="fitCenter"
-                    android:layout_gravity="left"
-                    android:onClick="selectImage"
-                    android:background="@color/black"
-                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                        app:strokeColor="#E67917"
+                        app:strokeWidth="3dp"
+                        android:id="@+id/userPhoto"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        app:srcCompat="@drawable/cafehub_color_logo"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="250dp"
+                        android:maxHeight="60dp"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center"
+                        />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/userUpdatePhoto"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        app:srcCompat="@drawable/ic_add_photo"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="250dp"
+                        android:maxHeight="60dp"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center"
+                        android:onClick="selectImage"
+                        />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/nameHint"
@@ -111,6 +128,29 @@
                     android:inputType="textPersonName"
                     android:background="@drawable/custom_input"
                     android:drawableStart="@drawable/ic_user"/>
+
+                <TextView
+                    android:id="@+id/passwordHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:ems="10"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/ic_lock"/>
 
                 <TextView
                     android:id="@+id/birthdateHint"
