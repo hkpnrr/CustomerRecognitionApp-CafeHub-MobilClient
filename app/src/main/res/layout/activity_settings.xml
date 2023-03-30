@@ -54,13 +54,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:strokeColor="#E67917"
+                    app:strokeWidth="3dp"
                     android:id="@+id/userPhoto"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_user" />
 
                 <TextView

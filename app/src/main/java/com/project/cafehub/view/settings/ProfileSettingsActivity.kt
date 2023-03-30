@@ -23,6 +23,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import com.project.cafehub.business.SignupOpr
 import com.project.cafehub.databinding.ActivityProfileSettingsBinding
 import com.project.cafehub.model.CurrentUser
 import com.squareup.picasso.Picasso
@@ -38,6 +39,12 @@ class ProfileSettingsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
+    private lateinit var signupOpr:SignupOpr
+
+    var date: String =""
+    var birthDay: Int? = null
+    var birthMonth: Int? =null
+    var birthYear: Int? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,18 +55,23 @@ class ProfileSettingsActivity : AppCompatActivity() {
         auth = Firebase.auth
         db = Firebase.firestore
         storage = Firebase.storage
-        initToolbar()
+
+        signupOpr = SignupOpr()
+
         registerLauncher()
+        initBirthdate()
         fillCurrentUserInfo()
+        initToolbar()
+
 
     }
     private fun initToolbar(){
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbarProfileSettings)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbarProfileSettings.setNavigationOnClickListener {
             finish()
         }
+
     }
     private fun fillCurrentUserInfo(){
         binding.editTextName.setText(CurrentUser.user.name)
@@ -78,6 +90,12 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
     fun update(view: View){
 
+        var photoErrorFlag = false
+        var nameErrorFlag = false
+        var surnameErrorFlag = false
+        var passwordErrorFlag = false
+        var birthdateErrorFlag = false
+
         if(selectedPicture!=null){
             val uuid = UUID.randomUUID()
             val imageName = "$uuid.jpg"
@@ -93,19 +111,21 @@ class ProfileSettingsActivity : AppCompatActivity() {
 
                         //change CurrentUser photoUrl
                         CurrentUser.user.photoUrl=updatedPhotoUrl
-
                     }.addOnFailureListener {
 
-                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                        //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                        photoErrorFlag =true
                     }
                 }.addOnFailureListener {
 
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                    photoErrorFlag =true
                 }
 
 
             }.addOnFailureListener{
-                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                photoErrorFlag =true
             }
         }
 
@@ -118,7 +138,8 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 //change CurrentUser name
                 CurrentUser.user.name=updatedName
             }.addOnFailureListener {
-                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                nameErrorFlag=true
             }
         }
 
@@ -131,12 +152,86 @@ class ProfileSettingsActivity : AppCompatActivity() {
                 //change CurrentUser surname
                 CurrentUser.user.surname=updatedSurname
             }.addOnFailureListener {
-                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                surnameErrorFlag=true
             }
+        }
+
+        if(!binding.editTextPassword.text.toString().trim().equals("")){
+
+            if(signupOpr.isValidPassword(binding.editTextPassword.text.toString())) {
+
+                auth.currentUser!!.updatePassword(binding.editTextPassword.text.toString())
+                    .addOnSuccessListener {
+
+                        println("password " + binding.editTextPassword.text.toString())
+
+                    }.addOnFailureListener {
+                    passwordErrorFlag = true
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(this, "Uygun parola seçiniz", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+        if(date!="" && date!=CurrentUser.user.birthdate){
+
+            //change user birthdate in firestore db
+            db.collection("User").document(CurrentUser.user.id.toString()).update("birthdate",date).addOnSuccessListener {
+                //change CurrentUser birthdate
+                CurrentUser.user.birthdate=date
+            }.addOnFailureListener {
+                //Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                birthdateErrorFlag=true
+            }
+        }
+        var errorResponseMessage =""
+        if(nameErrorFlag){
+            errorResponseMessage+=" isim"
+        }
+        if(surnameErrorFlag){
+            errorResponseMessage+=" soyisim"
+        }
+        if(birthdateErrorFlag){
+            errorResponseMessage+=" doğum tarihi"
+        }
+        if(photoErrorFlag){
+            errorResponseMessage+=" profil fotosu"
+        }
+        if(passwordErrorFlag){
+            errorResponseMessage+=" parola"
+        }
+        if(errorResponseMessage!=""){
+            errorResponseMessage+="güncellenirken hata oluştu."
+            Toast.makeText(this, errorResponseMessage, Toast.LENGTH_SHORT).show()
         }
 
 
 
+    }
+
+    private fun initBirthdate(){
+
+        val today = Calendar.getInstance()
+        binding.datePickerBirthdate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)) { view, year, month, day ->
+            birthDay=day
+            birthMonth=month+1
+            birthYear=year
+
+            val age=signupOpr.getAge(birthDay!!, birthMonth!!, birthYear!!)
+            if(age<1){
+                date=""
+                Toast.makeText(this,"Lütfen uygun bir tarih seçiniz",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                date = (day.toString() + "-" + (month + 1) + "-" + year)
+            }
+        }
     }
 
     fun selectImage(view: View){
@@ -213,22 +308,6 @@ class ProfileSettingsActivity : AppCompatActivity() {
                     selectedPicture?.let {
                         binding.userPhoto.setImageURI(it)
                     }
-
-                    /*if(imageData!=null){
-                        try {
-                            if(Build.VERSION.SDK_INT>=28){
-                                val source = ImageDecoder.createSource(this@ProfileSettingsActivity.contentResolver, imageData)
-                                selectedBitmap=ImageDecoder.decodeBitmap(source)
-                                binding.userPhoto.setImageBitmap(selectedBitmap)
-                            }
-                            else{
-                                selectedBitmap = MediaStore.Images.Media.getBitmap(contentResolver,imageData)
-                                binding.userPhoto.setImageBitmap(selectedBitmap)
-                            }
-                        }catch (e:java.lang.Exception){
-                            e.printStackTrace()
-                        }
-                    }*/
                 }
             }
         }

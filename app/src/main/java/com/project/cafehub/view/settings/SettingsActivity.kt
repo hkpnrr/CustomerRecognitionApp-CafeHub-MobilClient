@@ -35,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.toolbar.setNavigationOnClickListener {
+
             finish()
         }
     }
