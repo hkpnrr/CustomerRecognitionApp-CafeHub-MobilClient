@@ -58,7 +58,6 @@ class LoginActivity : AppCompatActivity() {
             db.collection("User").whereEqualTo("email",currentUser.email).get()
                 .addOnSuccessListener { documents->
                     for(document in documents){
-                        //CurrentUser.user.birthdate= document.data.get("birthdate") as Date?
                         CurrentUser.user.email= document.data["email"] as String?
                         CurrentUser.user.photoUrl= document.data["photoUrl"] as String?
                         CurrentUser.user.name= document.data["name"] as String?
@@ -152,21 +151,39 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
+                val newUser = hashMapOf(
+                    "id" to account.id,
+                    "email" to account.email,
+                    "name" to account.givenName,
+                    "surname" to account.displayName?.split(" ")?.last(),
+                    "birthdate" to "",
+                    "photoUrl" to account.photoUrl.toString()
+                )
+
+                db.collection("User").document(account.id!!)
+                    .set(newUser)
+                    .addOnSuccessListener {
+                        Toast.makeText(this,"Giriş Başarılı",Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener{
+                        Toast.makeText(this,it.localizedMessage,Toast.LENGTH_SHORT).show()
+                    }
 
                 //fill CurrentUser properties
+                CurrentUser.user.id = account.id
+                CurrentUser.user.name = account.givenName
+                CurrentUser.user.surname = account.displayName?.split(" ")?.last()
+                CurrentUser.user.email = account.email
+                CurrentUser.user.birthdate = ""
+                if (account.getPhotoUrl() != null) {
+                    CurrentUser.user.photoUrl = account.photoUrl.toString()
+                }
 
-                val intent: Intent = Intent(this, HomePageActivity::class.java)
-                val user = User(account.id, account.displayName, null, account.email, null)
-                CurrentUser.user = user
-                intent.putExtra("userModel", user)
+                val intent = Intent(this, HomePageActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
-
-
-
-
 }

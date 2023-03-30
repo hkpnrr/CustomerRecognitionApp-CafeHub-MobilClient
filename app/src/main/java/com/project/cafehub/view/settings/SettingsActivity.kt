@@ -9,6 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.project.cafehub.databinding.ActivitySettingsBinding
 import com.project.cafehub.model.CurrentUser
+import com.project.cafehub.model.User
 import com.project.cafehub.view.authentication.LoginActivity
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -68,6 +69,7 @@ class SettingsActivity : AppCompatActivity() {
 
     fun logout(view: View){
         auth.signOut()
+        CurrentUser.user = User()
         val intent = Intent(this@SettingsActivity, LoginActivity::class.java);
         startActivity(intent)
         finish()

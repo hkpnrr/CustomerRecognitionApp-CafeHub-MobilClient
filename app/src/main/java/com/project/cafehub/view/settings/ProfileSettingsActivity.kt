@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -70,10 +71,11 @@ class ProfileSettingsActivity : AppCompatActivity() {
     }
 
     private fun parseCurrentUserBirthdate(){
-
         var birthdate = CurrentUser.user.birthdate
-        var splitBirthdate = birthdate?.split("-")
-        splitBirthdate?.let { binding.datePickerBirthdate.updateDate(it[2].toInt(),it[1].toInt()-1,it[0].toInt()) }
+        if (!TextUtils.isEmpty(birthdate)) {
+            var splitBirthdate = birthdate?.split("-")
+            splitBirthdate?.let { binding.datePickerBirthdate.updateDate(it[2].toInt(),it[1].toInt()-1,it[0].toInt()) }
+        }
     }
 
     fun update(view: View){
