@@ -16,7 +16,7 @@ class CafeAdapter(val cafeList: ArrayList<Cafe>): RecyclerView.Adapter<CafeAdapt
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeAdapter.CafeHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeHolder {
         val binding = RowCafeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CafeHolder(binding)
     }

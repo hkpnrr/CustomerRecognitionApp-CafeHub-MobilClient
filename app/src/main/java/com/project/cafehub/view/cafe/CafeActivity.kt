@@ -27,6 +27,7 @@ class CafeActivity : AppCompatActivity() {
         setContentView(view)
 
         db = Firebase.firestore
+        currentCafe = (intent.getSerializableExtra("cafe") as Cafe?)!!
 
         replaceFragment(CafeMenuFragment())
 
@@ -52,7 +53,6 @@ class CafeActivity : AppCompatActivity() {
     }
 
     private fun displayCurrentCafeInfo(){
-        currentCafe = (intent.getSerializableExtra("cafe") as Cafe?)!!
         Picasso.get().load(currentCafe.imageUrl).into(binding.cafeImage)
         binding.textViewCafeName.text=currentCafe.name
     }
@@ -65,6 +65,10 @@ class CafeActivity : AppCompatActivity() {
         }
     }
     fun replaceFragment(fragment: Fragment) {
+        val bundle = Bundle()
+        bundle.putString("currentCafeId", currentCafe.id)
+        fragment.arguments=bundle
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout, fragment)
