@@ -91,7 +91,7 @@ class CafeActivity : AppCompatActivity() {
     private fun getCafeWorkHours(){
         currentCafeWorkHours = CafeWorkHours()
 
-        db.collection("CafeWorkHours").whereEqualTo("cafeId",currentCafe.id).get()
+        db.collection("Cafe").document(currentCafe.id.toString()).collection("WorkHours").get()
             .addOnSuccessListener { documents->
                 for(document in documents){
                     currentCafeWorkHours.cafeId= document.data.get("cafeId") as String?
@@ -122,7 +122,7 @@ class CafeActivity : AppCompatActivity() {
 
         var queryDayName = getTodayAsString().toLowerCase()+"WorkHour"
         var workHour: String? =null
-        db.collection("CafeWorkHours").whereEqualTo("cafeId",currentCafe.id)
+        db.collection("Cafe").document(currentCafe.id.toString()).collection("WorkHours")
             .get().addOnSuccessListener { documents->
                 for (document in documents){
                     workHour=document.data.get(queryDayName) as String?

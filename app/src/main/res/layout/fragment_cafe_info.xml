@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4444"
     tools:context=".view.cafe.CafeInfoFragment">
 
     <LinearLayout
@@ -15,9 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Adres"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:layout_margin="20dp"
+            android:background="#D17842"
+            android:padding="20dp"
             >
         </TextView>
 
@@ -38,8 +39,11 @@
             android:layout_height="wrap_content"
             android:text="Çalışma Saatleri"
             android:textSize="20dp"
+
+            android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_margin="20dp"
+            android:background="#D17842"
+            android:padding="20dp"
             >
         </TextView>
 
