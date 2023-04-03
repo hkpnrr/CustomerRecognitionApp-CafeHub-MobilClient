@@ -37,6 +37,7 @@
         android:id="@+id/tvProductSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@id/tvProductName"
         app:layout_constraintTop_toBottomOf="@id/tvProductName"
         android:text="Standart Boy  |"
@@ -48,7 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/ivProductItem"
-        app:layout_constraintTop_toTopOf="@id/tvProductSize"
+        app:layout_constraintBottom_toBottomOf="@id/tvProductSize"
+        android:textSize="18sp"
         android:text="30₺" />
 
     <androidx.constraintlayout.widget.Guideline

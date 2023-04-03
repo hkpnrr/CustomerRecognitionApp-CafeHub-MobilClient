@@ -2,9 +2,7 @@ package com.project.cafehub.view.cafe
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.project.cafehub.R
 import com.project.cafehub.adapter.CategoryAdapter
 import com.project.cafehub.adapter.CategoryOnClickInterface
 import com.project.cafehub.adapter.ProductAdapter
 import com.project.cafehub.adapter.ProductOnClickInterface
 import com.project.cafehub.databinding.FragmentCafeMenuBinding
-import com.project.cafehub.model.Cafe
 import com.project.cafehub.model.Product
 
-class CafeMenuFragment : Fragment(), CategoryOnClickInterface, ProductOnClickInterface {
+class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickInterface, ProductOnClickInterface {
 
     private lateinit var binding : FragmentCafeMenuBinding
     private lateinit var db: FirebaseFirestore
@@ -32,20 +30,13 @@ class CafeMenuFragment : Fragment(), CategoryOnClickInterface, ProductOnClickInt
     private lateinit var productAdapter: ProductAdapter
     private lateinit var categoryAdapter: CategoryAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCafeMenuBinding.inflate(inflater, container, false)
-        val view = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentCafeMenuBinding.bind(view)
+        db = Firebase.firestore
         val bundle = arguments
         currentCafeId = bundle?.getString("currentCafeId")
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        db = Firebase.firestore
         categoryList = ArrayList()
         productList = ArrayList()
 
@@ -63,7 +54,6 @@ class CafeMenuFragment : Fragment(), CategoryOnClickInterface, ProductOnClickInt
         productAdapter = ProductAdapter(productList,this)
         binding.rvMainProductsList.adapter = productAdapter
         setProductsData()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -74,6 +64,7 @@ class CafeMenuFragment : Fragment(), CategoryOnClickInterface, ProductOnClickInt
                 val categoryName = document.get("name") as String
                 categoryList.add(categoryName)
             }
+                arrangeCategoryList()
             categoryAdapter.notifyDataSetChanged()
         }.addOnFailureListener{
             Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -127,10 +118,27 @@ class CafeMenuFragment : Fragment(), CategoryOnClickInterface, ProductOnClickInt
         } else {
             setProductsData()
         }
-
-
     }
 
+    fun arrangeCategoryList() {
+        for (i in categoryList.indices) {
+            if(categoryList[i] == "En Çok Satanlar" && i != 0) {
+                var tempCategory = categoryList[0]
+                categoryList[0] = categoryList[i]
+                categoryList[i] = tempCategory
+            }
+            else if(categoryList[i] == "Sıcak" && i != 1) {
+                var tempCategory = categoryList[1]
+                categoryList[1] = categoryList[i]
+                categoryList[i] = tempCategory
+            }
+            else if(categoryList[i] == "Soğuk" && i != 2) {
+                var tempCategory = categoryList[2]
+                categoryList[2] = categoryList[i]
+                categoryList[i] = tempCategory
+            }
+        }
+    }
     override fun onClickProduct(item: Product) {
         TODO("Not yet implemented")
     }

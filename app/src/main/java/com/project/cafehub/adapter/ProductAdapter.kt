@@ -11,7 +11,6 @@ import com.squareup.picasso.Picasso
 class ProductAdapter(val productList: ArrayList<Product>, val productClickInterface: ProductOnClickInterface)
     : RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
-
     class ProductHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -26,13 +25,13 @@ class ProductAdapter(val productList: ArrayList<Product>, val productClickInterf
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
-        val currentItem = productList.get(position)
+        val currentItem = productList[position]
         holder.binding.tvProductName.text = currentItem.name
         holder.binding.tvProductPrice.text = "${currentItem.price}₺"
         Picasso.get().load(currentItem.imageUrl).into(holder.binding.ivProductItem)
 
         holder.itemView.setOnClickListener {
-            productClickInterface.onClickProduct(productList.get(position))
+            productClickInterface.onClickProduct(productList[position])
         }
     }
 
