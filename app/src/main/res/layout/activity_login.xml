@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginActivity">
+    tools:context=".view.authentication.LoginActivity">
 
     <ImageView
         android:id="@+id/logoView"
@@ -24,7 +24,7 @@
         android:id="@+id/emailHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/email"
         android:textSize="19sp"
         app:layout_constraintStart_toStartOf="@id/emailText"
         app:layout_constraintBottom_toTopOf="@id/emailText" />
@@ -37,7 +37,7 @@
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="example@gmail.com"
+        android:hint="@string/example_gmail_com"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:rotationY="0"
@@ -51,7 +51,7 @@
         android:id="@+id/passwordHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="@string/password"
         android:textSize="19sp"
         app:layout_constraintStart_toStartOf="@id/passwordText"
         app:layout_constraintBottom_toTopOf="@id/passwordText" />
@@ -66,8 +66,8 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="Enter your password"
-        android:inputType="textPersonName"
+        android:hint="@string/enter_your_password"
+        android:inputType="textPassword"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:rotationY="0"
@@ -83,7 +83,7 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:onClick="forgotPassword"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         app:layout_constraintEnd_toEndOf="@id/passwordText"
         app:layout_constraintTop_toBottomOf="@id/passwordText"
         android:focusable="true" />
@@ -95,7 +95,7 @@
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/teal_700"
         android:onClick="loginClicked"
-        android:text="LOGIN"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="@id/passwordText"
         app:layout_constraintStart_toStartOf="@id/passwordText"
         app:layout_constraintTop_toBottomOf="@+id/passwordText" />
@@ -110,17 +110,17 @@
         app:layout_constraintTop_toBottomOf="@id/loginButton"
         android:layout_marginTop="40dp">
         <View
-            android:layout_width="109dp"
+            android:layout_width="118dp"
             android:layout_height="2dp"
             android:background="#D17842"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Or With "
+            android:text="@string/or_with"
             android:textSize="18sp"/>
         <View
-            android:layout_width="109dp"
+            android:layout_width="118dp"
             android:layout_height="2dp"
             android:layout_weight="1"
             android:background="#D17842" />
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:onClick="signUpSpotifyClicked"
-        android:text="Sign Up with Spotify"
+        android:text="@string/sign_up_with_spotify"
         android:drawableLeft="@drawable/spotify_logo"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
@@ -149,7 +149,7 @@
         android:drawableLeft="@drawable/google_logo"
         android:backgroundTint="@color/white"
         android:onClick="signUpGoogleClicked"
-        android:text="Sign Up with Google"
+        android:text="@string/sign_up_with_google"
         android:textColor="@color/black"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@id/signUpSpotify"
@@ -163,13 +163,13 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account?"
+            android:text="@string/don_t_have_an_account"
             android:gravity="center_vertical|right"
             android:layout_weight="1"
             android:textSize="19sp"/>
@@ -178,7 +178,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Sign Up"
+            android:text="@string/sign_up"
             android:gravity="center_vertical"
             android:layout_weight="1"
             android:textSize="19sp"

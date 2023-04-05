@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0C0F14"
-    tools:context=".view.SplashActivity">
+    tools:context=".view.authentication.SplashActivity">
 
     <ImageView
         android:id="@+id/splashImageView"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:backgroundTint="#D17842"
-        android:text="Next"
+        android:text="@string/next"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="FIND THE BEST CAFE FOR YOU"
+        android:text="KENDİNE UYGUN KAFE'Yİ BUL"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignupActivity">
+    tools:context=".view.authentication.SignupActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,75 +13,150 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-
-            <EditText
-                android:id="@+id/editTextEmailAddress"
+            <ImageView
+                android:id="@+id/logoView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="15dp"/>
+                app:srcCompat="@drawable/cafehub_color_logo"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="250dp"
+                android:maxHeight="60dp"
+                android:scaleType="fitCenter"/>
 
-            <EditText
-                android:id="@+id/editTextPassword"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="284dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:layout_margin="15dp"/>
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="40dp">
 
-            <EditText
-                android:id="@+id/editTextName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name"
-                android:inputType="textPersonName"
-                android:layout_margin="15dp"/>
+                <TextView
+                    android:id="@+id/emailHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"/>
+                <EditText
+                    android:id="@+id/editTextEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:drawablePadding="12dp"
+                    android:ems="10"
+                    android:hint="@string/example_gmail_com"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/ic_email"/>
 
-            <EditText
-                android:id="@+id/editTextSurname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Surname"
-                android:inputType="textPersonName"
-                android:layout_margin="15dp"/>
+                <TextView
+                    android:id="@+id/passwordHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    />
 
-            <TextView
-                android:layout_width="119dp"
-                android:layout_height="40dp"
-                android:text="Birthdate"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:layout_margin="15dp">
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:ems="10"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/ic_lock"/>
 
-            </TextView>
+                <TextView
+                    android:id="@+id/nameHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    />
 
-            <DatePicker
-                android:id="@+id/datePickerBirthdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:layout_margin="5dp" />
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:ems="10"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/ic_user"/>
 
-            <Button
-                android:id="@+id/signupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="signupClicked"
-                android:text="sıgnup"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="30dp"/>
+                <TextView
+                    android:id="@+id/surnameHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/surname"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <EditText
+                    android:id="@+id/editTextSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:ems="10"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:hint="@string/surname"
+                    android:inputType="textPersonName"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/ic_user"/>
+
+                <TextView
+                    android:id="@+id/birthdateHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/birthdate"
+                    android:textSize="19sp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <DatePicker
+                    android:id="@+id/datePickerBirthdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="0dp"/>
+
+                <Button
+                    android:id="@+id/signupButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="signupClicked"
+                    android:text="@string/sign_up"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/teal_700"/>
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

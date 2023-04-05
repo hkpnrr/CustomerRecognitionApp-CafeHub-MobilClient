@@ -1,6 +1,5 @@
-package com.project.cafehub.view
+package com.project.cafehub.view.authentication
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -25,7 +24,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     fun sendEmailClicked(view: View) {
         auth.sendPasswordResetEmail(binding.emailText.text.toString()).addOnSuccessListener {
-            Toast.makeText(this, "A password reset link has been sent to your email address. ", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Parola sıfırlama linki e-postanıza gönderildi.", Toast.LENGTH_LONG).show()
         }.addOnFailureListener {
             Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
         }
