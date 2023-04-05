@@ -58,7 +58,7 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setCategoryList() {
-        db.collection("Cafe").document(currentCafeId.toString()).collection("Category")
+        db.collection("Cafe").document(currentCafeId!!).collection("Category")
             .get().addOnSuccessListener { result ->
             for (document in result) {
                 val categoryName = document.get("name") as String
@@ -73,7 +73,7 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setProductsData() {
-        db.collection("Cafe").document(currentCafeId.toString()).collection("Product").whereEqualTo("isBestSelling", true)
+        db.collection("Cafe").document(currentCafeId!!).collection("Product").whereEqualTo("isBestSelling", true)
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val id = document.get("id") as String
@@ -98,7 +98,7 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
         productList.clear()
 
         if (button.text != "En Çok Satanlar") {
-            db.collection("Cafe").document(currentCafeId.toString()).collection("Product").whereEqualTo("category", button.text)
+            db.collection("Cafe").document(currentCafeId!!).collection("Product").whereEqualTo("category", button.text)
                 .get().addOnSuccessListener { result ->
                     for (document in result) {
                         val id = document.get("id") as String
