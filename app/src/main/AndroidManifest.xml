@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeHub"
         tools:targetApi="31">
+        <activity
+            android:name=".view.currentCafe.CurrentCafeActivity"
+            android:exported="false" />
         <activity
             android:name=".view.settings.ProfileSettingsActivity"
             android:exported="false" />

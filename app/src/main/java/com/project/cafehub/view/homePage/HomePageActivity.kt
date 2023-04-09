@@ -14,7 +14,6 @@ import com.project.cafehub.view.settings.SettingsActivity
 class HomePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomePageBinding
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,20 +24,16 @@ class HomePageActivity : AppCompatActivity() {
 
         initToolbar()
 
-        auth = FirebaseAuth.getInstance()
-        //val user = intent.extras?.getSerializable("userModel") as User
-
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.qr -> replaceFragment(QrFragment())
-                R.id.profile -> replaceFragment(QrFragment())
+                R.id.profile -> replaceFragment(QrFragment()) //Intent yapılcak
 
                 else -> {}
             }
             true
         }
-
     }
 
     private fun initToolbar(){
