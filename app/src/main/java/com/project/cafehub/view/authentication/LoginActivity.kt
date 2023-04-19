@@ -65,7 +65,6 @@ class LoginActivity : AppCompatActivity() {
                         CurrentUser.user.id= document.data["id"] as String?
                         CurrentUser.user.birthdate= document.data["birthdate"] as String?
                     }
-
                     val intent = Intent(this, HomePageActivity::class.java)
                     startActivity(intent)
                     finish()

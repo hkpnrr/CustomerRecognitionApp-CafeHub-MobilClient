@@ -1,5 +1,6 @@
 package com.project.cafehub.view.currentCafe
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityCurrentCafeBinding
 import com.project.cafehub.model.Cafe
+import com.project.cafehub.view.cafe.CafeActivity
 import com.project.cafehub.view.homePage.HomeFragment
 import com.project.cafehub.view.homePage.QrFragment
 
@@ -58,4 +60,5 @@ class CurrentCafeActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }
