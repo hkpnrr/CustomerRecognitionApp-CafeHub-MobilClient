@@ -193,21 +193,28 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                             //User kafeye giriş yapabilir
                             db.collection("Cafe").document(result.contents.toString()).collection("ActiveUserList")
                                 .document(CurrentUser.user.id!!).get().addOnSuccessListener {
-                                    Toast.makeText(activity, "Zaten aktif müşterisiniz", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(activity, CurrentCafeActivity::class.java)
-                                    intent.putExtra("currentCafe", scannedCafe)
-                                    startActivity(intent)
+                                    if(it.exists()){
+                                        Toast.makeText(activity, "Zaten aktif müşterisiniz", Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(activity, CurrentCafeActivity::class.java)
+                                        intent.putExtra("currentCafe", scannedCafe)
+                                        startActivity(intent)
+                                    }else{
+                                        val activeUserData = hashMapOf(
+                                            "userId" to CurrentUser.user.id!!
+                                        )
+
+                                        db.collection("Cafe").document(result.contents.toString()).collection("ActiveUserList")
+                                            .document(CurrentUser.user.id!!).set(activeUserData).addOnSuccessListener {
+                                                val intent = Intent(activity, CurrentCafeActivity::class.java)
+                                                intent.putExtra("currentCafe", scannedCafe)
+                                                startActivity(intent)
+                                            }.addOnFailureListener{
+                                                Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                                            }
+                                    }
+
                                 }.addOnFailureListener {
-                                    val activeUserData = hashMapOf(
-                                        "userId" to CurrentUser.user.id!!
-                                    )
 
-                                    db.collection("Cafe").document(result.contents.toString()).collection("ActiveUserList")
-                                        .document(CurrentUser.user.id!!).set(activeUserData).addOnSuccessListener {
-
-                                        }.addOnFailureListener{
-                                            Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
-                                        }
                                 }
                         }
                         else{
