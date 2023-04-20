@@ -8,5 +8,7 @@ data class User(
     var surname:String? = null,
     var email:String? = null,
     var birthdate:String? = null,
-    var photoUrl:String?=null) : Serializable {
+    var photoUrl:String?=null,
+    var isActive:Boolean?=null,
+    var activeCafeId:String?=null) : Serializable {
 }

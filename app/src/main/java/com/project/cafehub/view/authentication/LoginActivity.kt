@@ -64,6 +64,10 @@ class LoginActivity : AppCompatActivity() {
                         CurrentUser.user.surname= document.data["surname"] as String?
                         CurrentUser.user.id= document.data["id"] as String?
                         CurrentUser.user.birthdate= document.data["birthdate"] as String?
+                        CurrentUser.user.isActive= document.data["isActive"] as Boolean?
+                        CurrentUser.user.activeCafeId= document.data["activeCafeId"] as String?
+
+
                     }
                     val intent = Intent(this, HomePageActivity::class.java)
                     startActivity(intent)
@@ -95,6 +99,10 @@ class LoginActivity : AppCompatActivity() {
                             CurrentUser.user.surname= document.data.get("surname") as String?
                             CurrentUser.user.id= document.data.get("id") as String?
                             CurrentUser.user.birthdate= document.data["birthdate"] as String?
+                            CurrentUser.user.isActive= document.data["isActive"] as Boolean?
+                            CurrentUser.user.activeCafeId= document.data["activeCafeId"] as String?
+
+
                         }
 
                         val intent = Intent(this, HomePageActivity::class.java)
@@ -156,7 +164,8 @@ class LoginActivity : AppCompatActivity() {
                     "name" to account.givenName,
                     "surname" to account.displayName?.split(" ")?.last(),
                     "birthdate" to "",
-                    "photoUrl" to account.photoUrl.toString()
+                    "photoUrl" to account.photoUrl.toString(),
+                    "isActive" to false
                 )
 
                 db.collection("User").document(account.id!!)

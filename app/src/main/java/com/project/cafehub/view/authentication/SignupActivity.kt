@@ -85,7 +85,8 @@ class SignupActivity : AppCompatActivity() {
                             "email" to email,
                             "name" to name,
                             "surname" to surname,
-                            "birthdate" to birthdate
+                            "birthdate" to birthdate,
+                            "isActive" to false
                         )
                         firestore.collection("User").document(auth.currentUser?.uid.toString())
                             .set(newUser)

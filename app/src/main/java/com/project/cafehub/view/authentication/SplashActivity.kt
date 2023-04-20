@@ -49,6 +49,10 @@ class SplashActivity : AppCompatActivity() {
                         CurrentUser.user.surname= document.data["surname"] as String?
                         CurrentUser.user.id= document.data["id"] as String?
                         CurrentUser.user.birthdate= document.data["birthdate"] as String?
+                        CurrentUser.user.isActive= document.data["isActive"] as Boolean?
+                        CurrentUser.user.activeCafeId= document.data["activeCafeId"] as String?
+
+
                     }
                     val intent = Intent(this, HomePageActivity::class.java)
                     startActivity(intent)
