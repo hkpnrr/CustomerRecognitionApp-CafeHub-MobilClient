@@ -10,7 +10,11 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/round_corner"
+        android:padding="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="20dp">
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -18,15 +22,27 @@
             android:text="Masadaki QR Kodu Okutarak Siz De Müşterilerden Biri Olabilirsiniz"
             android:gravity="center"
             android:textSize="20dp"
-            android:layout_marginBottom="200dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="50dp"
             android:textStyle="bold"
             />
-        <Button
+        <ImageView
             android:id="@+id/scanQrButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/ic_qr_code_scanner"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"/>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QR Kod Tarat"
-            android:layout_gravity="center"/>
+            android:text="QR Kod Okut"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center">
+
+        </TextView>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/isActiveTrueLayout"
@@ -35,38 +51,63 @@
         app:layout_constraintTop_toBottomOf="@+id/isActiveFalseLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:layout_marginTop="150dp"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        android:background="@drawable/round_corner"
+        android:padding="20dp">
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_weight="3"
             android:layout_marginHorizontal="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Şuan Aktif Müşterisi Olduğunuz Kafe:"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
                 android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp"
                 >
 
             </TextView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                app:strokeColor="#E67917"
+                app:strokeWidth="3dp"
+                android:id="@+id/cafePhotoImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/cafehub_color_logo"
+                android:adjustViewBounds="true"
+                android:maxWidth="250dp"
+                android:maxHeight="60dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                />
             <TextView
                 android:id="@+id/cafeNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="BUCKIN"
+                android:text="DEFAULT"
                 android:gravity="center"
+                android:textSize="30dp"
+                android:textColor="#E67917"
                 android:textStyle="bold">
-
             </TextView>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:layout_weight="2"
             android:layout_marginHorizontal="10dp">
 
             <Button
@@ -75,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="2"
+                android:backgroundTint="#14BD58"
                 android:text="Giriş yap">
 
             </Button>
@@ -85,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="2"
+                android:backgroundTint="#DF1919"
                 android:text="Çıkış yap">
 
             </Button>

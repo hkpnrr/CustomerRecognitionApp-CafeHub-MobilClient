@@ -32,6 +32,7 @@ import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.Rating
 import com.project.cafehub.view.cafe.CafeActivity
 import com.project.cafehub.view.currentCafe.CurrentCafeActivity
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.NonDisposableHandle.parent
 import org.json.JSONException
 import org.json.JSONObject
@@ -59,19 +60,18 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
         savedInstanceState: Bundle?
     ): View? {
 
+
         binding = FragmentQrBinding.inflate(layoutInflater)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setVisibility()
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        db = Firebase.firestore
+        setVisibility()
         registerLauncher()
         getCurrentLocation()
-        db = Firebase.firestore
         setupScanner()
         setOnClickListener()
     }
@@ -84,8 +84,24 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
 
     private fun setVisibility(){
         if(CurrentUser.user.isActive==true){
-            binding.isActiveFalseLayout.visibility=View.GONE
-            binding.isActiveTrueLayout.visibility=View.VISIBLE
+            db.collection("Cafe").document(CurrentUser.user.activeCafeId.toString()).get()
+                .addOnSuccessListener {document->
+                    scannedCafe =Cafe(
+                        document.data?.get("id") as String, document.data?.get("name") as String?,
+                        document.data?.get("address") as String?,
+                        document.data?.get("imageUrl") as String?,
+                        (document.data?.get("latitude") as String).toDouble(),
+                        (document.data?.get("longitude") as String).toDouble()
+                    )
+                    binding.isActiveFalseLayout.visibility=View.GONE
+                    binding.isActiveTrueLayout.visibility=View.VISIBLE
+                    Picasso.get().load(scannedCafe.imageUrl).into(binding.cafePhotoImageView)
+                    binding.cafeNameTextView.text=scannedCafe.name
+
+                }.addOnFailureListener {
+                    Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+
 
         }
         else{
@@ -117,7 +133,7 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
     private fun exitCafe(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Onay")
-        builder.setMessage("Eylemi onaylıyor musunuz?")
+        builder.setMessage("Kafeden çıkış yapmayı onaylıyor musunuz?")
         builder.setPositiveButton("Evet") { dialog, which ->
             db.collection("Cafe").document(CurrentUser.user.activeCafeId.toString()).collection("ActiveUserList")
                 .document(CurrentUser.user.id.toString()).delete().addOnSuccessListener {
@@ -147,7 +163,7 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
 
         if(ContextCompat.checkSelfPermission(requireActivity().applicationContext,android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),android.Manifest.permission.ACCESS_FINE_LOCATION)){
-                Snackbar.make(requireView(),"Permission needed for location", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
+                Snackbar.make(requireView(),"Konum izni gerekli", Snackbar.LENGTH_INDEFINITE).setAction("İzin Ver"){
                     //request permission
                     permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
                 }.show()
@@ -192,13 +208,10 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                         }
                         .addOnFailureListener { exception ->
                             Toast.makeText(activity, exception.localizedMessage, Toast.LENGTH_SHORT).show()
-
                         }
                 }
-
             }else{
                 //permission denied
-
                 Toast.makeText(activity, "İzin verilmedi", Toast.LENGTH_SHORT).show()
 
             }
@@ -226,7 +239,6 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
     }
 
     private fun performAction() {
-        // Code to perform action when button is clicked.
         qrScanIntegrator.initiateScan()
     }
 
@@ -260,32 +272,6 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                             && scannedCafe.longitude!! >= minLongitude!! && scannedCafe.longitude!! <= maxLongitude!!
                         ){
                             //User kafeye giriş yapabilir
-                            /*db.collection("Cafe").document(result.contents.toString()).collection("ActiveUserList")
-                                .document(CurrentUser.user.id!!).get().addOnSuccessListener {
-                                    if(it.exists()){
-                                        Toast.makeText(activity, "Zaten aktif müşterisiniz", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(activity, CurrentCafeActivity::class.java)
-                                        intent.putExtra("currentCafe", scannedCafe)
-                                        startActivity(intent)
-                                    }else{
-                                        val activeUserData = hashMapOf(
-                                            "userId" to CurrentUser.user.id!!
-                                        )
-
-                                        db.collection("Cafe").document(result.contents.toString()).collection("ActiveUserList")
-                                            .document(CurrentUser.user.id!!).set(activeUserData).addOnSuccessListener {
-                                                val intent = Intent(activity, CurrentCafeActivity::class.java)
-                                                intent.putExtra("currentCafe", scannedCafe)
-                                                startActivity(intent)
-                                            }.addOnFailureListener{
-                                                Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
-                                            }
-                                    }
-
-                                }.addOnFailureListener {
-
-                                }*/
-
                             val activeUserData = hashMapOf(
                                 "userId" to CurrentUser.user.id!!
                             )
@@ -321,10 +307,5 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
-
-
-
 
 }
