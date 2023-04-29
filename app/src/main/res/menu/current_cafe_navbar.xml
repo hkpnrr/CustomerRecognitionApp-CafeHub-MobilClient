@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Ana Sayfa"
-        android:id="@+id/home"
+    <item android:title="Sosyal"
+        android:id="@+id/social"
         android:icon="@drawable/ic_baseline_home_24"/>
-    <item android:title="QR"
-        android:id="@+id/qr"
+    <item android:title="Spotify"
+        android:id="@+id/spotify"
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"/>
     <item android:title="Profil"
         android:id="@+id/profile"

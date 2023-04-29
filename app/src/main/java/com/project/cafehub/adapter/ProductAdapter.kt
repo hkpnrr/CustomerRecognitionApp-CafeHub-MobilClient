@@ -34,8 +34,6 @@ class ProductAdapter(val productList: ArrayList<Product>, val productClickInterf
             productClickInterface.onClickProduct(productList[position])
         }
     }
-
-
 }
 
 interface ProductOnClickInterface{

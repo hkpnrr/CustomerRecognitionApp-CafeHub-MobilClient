@@ -120,6 +120,11 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
         }
     }
 
+    override fun onClickProduct(item: Product) {
+        TODO("Not yet implemented")
+    }
+
+
     fun arrangeCategoryList() {
         for (i in categoryList.indices) {
             if(categoryList[i] == "En Çok Satanlar" && i != 0) {
@@ -138,8 +143,5 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
                 categoryList[i] = tempCategory
             }
         }
-    }
-    override fun onClickProduct(item: Product) {
-        TODO("Not yet implemented")
     }
 }

@@ -85,7 +85,9 @@ class SignupActivity : AppCompatActivity() {
                             "email" to email,
                             "name" to name,
                             "surname" to surname,
-                            "birthdate" to birthdate
+                            "birthdate" to birthdate,
+                            "isActive" to false,
+                            "photoUrl" to "https://firebasestorage.googleapis.com/v0/b/cafe-hub-e49e0.appspot.com/o/User%20Photos%2Fdefault_pp.jpg?alt=media&token=64e89ad8-8bb9-4268-bc8f-5e98d894b2a5"
                         )
                         firestore.collection("User").document(auth.currentUser?.uid.toString())
                             .set(newUser)

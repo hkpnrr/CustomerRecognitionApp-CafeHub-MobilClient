@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/custom_image_background"
+    android:orientation="horizontal"
+    android:layout_marginBottom="15dp">
+
+    <ImageView
+        android:id="@+id/ivUserPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        tools:srcCompat="@tools:sample/avatars[0]" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="Name Surname"
+        android:textSize="23sp"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/ivAddFriend"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="addFriend"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/add_friend" />
+
+
+</LinearLayout>
