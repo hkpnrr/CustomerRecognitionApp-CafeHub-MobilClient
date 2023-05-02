@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -18,13 +18,16 @@
         android:theme="@style/Theme.CafeHub"
         tools:targetApi="31">
         <activity
+            android:name=".view.friendship.FriendshipRequestsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.chat.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.currentCafe.CurrentCafeActivity"
             android:exported="false" />
         <activity
             android:name=".view.settings.ProfileSettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.settings.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".view.cafe.CafeActivity"
@@ -37,13 +40,11 @@
             android:exported="false" />
         <activity
             android:name=".view.homePage.HomePageActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
-
         <activity
             android:name=".view.authentication.SplashActivity"
             android:exported="true"

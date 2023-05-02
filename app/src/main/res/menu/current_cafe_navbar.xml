@@ -8,6 +8,6 @@
         android:id="@+id/spotify"
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"/>
     <item android:title="Profil"
-        android:id="@+id/profile"
+        android:id="@+id/settings"
         android:icon="@drawable/ic_baseline_person_24"/>
 </menu>

@@ -6,10 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityHomePageBinding
-import com.project.cafehub.view.settings.SettingsActivity
+import com.project.cafehub.view.chat.ChatActivity
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class HomePageActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.qr -> replaceFragment(QrFragment())
-                R.id.profile -> replaceFragment(QrFragment()) //Intent yapılcak
+                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {}
             }
@@ -59,8 +58,8 @@ class HomePageActivity : AppCompatActivity() {
         // Handle action bar item clicks here.
         val id = item.itemId
 
-        if(id== R.id.profile){
-            val intent = Intent(this@HomePageActivity, SettingsActivity::class.java)
+        if(id== R.id.chat){
+            val intent = Intent(this@HomePageActivity, ChatActivity::class.java)
             startActivity(intent)
             return true;
         }
