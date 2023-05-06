@@ -44,6 +44,7 @@ class FriendshipRequestsActivity : AppCompatActivity() {
 
     private fun fetchFriendshipRequests(){
         db.collection("FriendshipRequest").whereEqualTo("addresseeId",CurrentUser.user.id.toString())
+            .whereEqualTo("isValid",true)
             .get().addOnSuccessListener {
                 for (document in it){
 

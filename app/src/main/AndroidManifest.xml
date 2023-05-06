@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CafeHub"
         tools:targetApi="31">
         <activity
+            android:name=".view.friendship.FriendshipActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.friendship.FriendshipRequestsActivity"
             android:exported="false" />
         <activity

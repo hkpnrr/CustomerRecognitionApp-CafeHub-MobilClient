@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,21 +36,26 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
         val namesurname = "${userList[position].name} ${userList[position].surname}"
         holder.binding.tvUserName.text = namesurname
         Picasso.get().load(userList[position].photoUrl).into(holder.binding.ivUserPhoto)
+
         holder.binding.ivAddFriend.setOnClickListener {
             if(CurrentUser.user.id==userList[position].id){
                 println("Kendine istek atamazsın.")
             }
             else{
-
                 //check if this user already friends or requested
-
-                db.collection("User").document(CurrentUser.user.id.toString())
-                    .collection("Friends").whereEqualTo("friendId",userList[position].id)
-                    .get().addOnSuccessListener { it->
+                db.collection("Friendship")
+                    .where(Filter.or(Filter.and(
+                        Filter.equalTo("firstUserId",CurrentUser.user.id.toString()),
+                        Filter.equalTo("secondUserId",userList[position].id)),
+                        Filter.and(
+                            Filter.equalTo("secondUserId",CurrentUser.user.id.toString()),
+                            Filter.equalTo("firstUserId",userList[position].id)))
+                    ).get().addOnSuccessListener { it->
                         if(it.isEmpty){
                             // not friend
                             println("arkadaş değilsin")
-                            db.collection("FriendshipRequest").whereEqualTo("requesterId",CurrentUser.user.id.toString())
+                            db.collection("FriendshipRequest")
+                                .whereEqualTo("requesterId",CurrentUser.user.id.toString())
                                 .whereEqualTo("isValid",true)
                                 .get().addOnSuccessListener {
                                     if (it.isEmpty){
@@ -68,11 +74,11 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                                             "isValid" to true,
                                             "isAccepted" to false
                                         )
-                                        db.collection("FriendshipRequest").add(request).addOnSuccessListener {
+                                        db.collection("FriendshipRequest").add(request)
+                                            .addOnSuccessListener {
                                             //request sent successfull
                                             println("arkadaş isteği yollandı")
                                         }.addOnFailureListener {
-
                                         }
                                     }
                                     else{
@@ -80,9 +86,7 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                                         println("arkadaş isteği zaten yollamışsın")
                                     }
                                 }.addOnFailureListener {
-
                                 }
-
                         }
                         else{
                             //already friends
@@ -91,8 +95,6 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                     }.addOnFailureListener {
 
                     }
-
-
             }
         }
     }

@@ -13,6 +13,7 @@ import com.project.cafehub.databinding.FragmentSettingsBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
 import com.project.cafehub.view.authentication.LoginActivity
+import com.project.cafehub.view.friendship.FriendshipActivity
 import com.project.cafehub.view.settings.ProfileSettingsActivity
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -62,7 +63,7 @@ class SettingsFragment : Fragment() {
         startActivity(intent)
     }
     fun redirectToFriends(){
-        val intent = Intent(requireContext(), ProfileSettingsActivity::class.java)
+        val intent = Intent(requireContext(), FriendshipActivity::class.java)
         startActivity(intent)
     }
     fun redirectToAppSettings(){
