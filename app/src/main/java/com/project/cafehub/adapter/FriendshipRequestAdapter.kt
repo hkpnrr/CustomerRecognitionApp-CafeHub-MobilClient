@@ -61,6 +61,35 @@ class FriendshipRequestAdapter(val friendshipRequestList: ArrayList<FriendshipRe
                         }
                         batch.commit().addOnSuccessListener {
                             println("batch kabul çalıştı")
+                            //eğer kabul ettiğin arkadaşlık isteğinin tam zıttı varsa onu isActive'ını false yap
+                            //isAccepted'ını true yap
+
+                            db.collection("FriendshipRequest").whereEqualTo("addresseeId",friendshipRequestList[position].requesterId)
+                                .whereEqualTo("requesterId",friendshipRequestList[position].addresseeId).get()
+                                .addOnSuccessListener {
+                                    if(it.isEmpty){
+                                        //zıt arkadaşlık isteği yok
+                                    }
+                                    else{
+                                        val tempValue = hashMapOf(
+                                            "isValid" to false,
+                                            "isAccepted" to true
+                                        )
+                                        //zıt arkadaşlık isteğini deactive et
+                                        var tempBatch = db.batch()
+
+                                        for (document in it){
+                                            val docRef = db.collection("FriendshipRequest").document(document.id)
+                                            tempBatch.update(docRef, tempValue as Map<String, Any>)
+                                        }
+
+                                        tempBatch.commit().addOnSuccessListener {
+                                            println("zıt batch çalıştı")
+                                        }.addOnFailureListener {
+                                            println("zıt batch çalışmadı")
+                                        }
+                                    }
+                                }
                             //recycler view refresh
                             holder.binding.root.visibility= View.GONE
 

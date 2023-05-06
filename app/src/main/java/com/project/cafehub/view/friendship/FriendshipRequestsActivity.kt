@@ -28,6 +28,7 @@ class FriendshipRequestsActivity : AppCompatActivity() {
         setContentView(view)
         db = Firebase.firestore
         friendshipRequestList=ArrayList()
+        initRvAdapter()
         fetchFriendshipRequests()
         initToolbar()
 
@@ -42,6 +43,12 @@ class FriendshipRequestsActivity : AppCompatActivity() {
         }
     }
 
+    private fun initRvAdapter(){
+        binding.rvFriendshipRequest.layoutManager = LinearLayoutManager(applicationContext)
+        friendshipRequestAdapter = FriendshipRequestAdapter(friendshipRequestList)
+        binding.rvFriendshipRequest.adapter = friendshipRequestAdapter
+    }
+
     private fun fetchFriendshipRequests(){
         db.collection("FriendshipRequest").whereEqualTo("addresseeId",CurrentUser.user.id.toString())
             .whereEqualTo("isValid",true)
@@ -51,18 +58,27 @@ class FriendshipRequestsActivity : AppCompatActivity() {
                     var temp = FriendshipRequest(document.get("requesterId").toString(),
                     document.get("addresseeId").toString(),document.get("sendDate").toString(),
                     document.getBoolean("isValid"),document.getBoolean("isAccepted"),
-                    document.get("requesterName").toString(),document.get("requesterSurname").toString(),
-                        document.get("addresseeName").toString(),document.get("addresseeSurname").toString(),
-                    document.get("requesterPhotoUrl").toString(),document.get("addresseePhotoUrl").toString())
+                    null,null, null)
 
                     friendshipRequestList.add(temp)
 
                 }
 
+                for ((index,value) in friendshipRequestList.withIndex()){
 
-                binding.rvFriendshipRequest.layoutManager = LinearLayoutManager(applicationContext)
-                friendshipRequestAdapter = FriendshipRequestAdapter(friendshipRequestList)
-                binding.rvFriendshipRequest.adapter = friendshipRequestAdapter
+                    db.collection("User").document(value.requesterId)
+                        .get().addOnSuccessListener {
+                            friendshipRequestList[index].requesterName=it.get("name").toString()
+                            friendshipRequestList[index].requesterSurname=it.get("surname").toString()
+                            friendshipRequestList[index].requesterPhotoUrl=it.get("photoUrl").toString()
+                            friendshipRequestAdapter.notifyDataSetChanged()
+                        }.addOnFailureListener {
+
+                        }
+                }
+
+
+
             }
     }
 }

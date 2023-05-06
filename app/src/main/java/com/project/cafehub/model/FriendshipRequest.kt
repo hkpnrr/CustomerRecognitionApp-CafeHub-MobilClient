@@ -8,9 +8,6 @@ data class FriendshipRequest(
     var isAccepted: Boolean?,
     var requesterName:String?,
     var requesterSurname:String?,
-    var addresseeName:String?,
-    var addresseeSurname:String?,
-    var requesterPhotoUrl:String?,
-    var addresseePhotoUrl:String?
+    var requesterPhotoUrl:String?
 ) {
 }

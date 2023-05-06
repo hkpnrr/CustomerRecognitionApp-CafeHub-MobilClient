@@ -56,6 +56,7 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                             println("arkadaş değilsin")
                             db.collection("FriendshipRequest")
                                 .whereEqualTo("requesterId",CurrentUser.user.id.toString())
+                                .whereEqualTo("addresseeId",userList[position].id.toString())
                                 .whereEqualTo("isValid",true)
                                 .get().addOnSuccessListener {
                                     if (it.isEmpty){
@@ -64,13 +65,7 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                                         val request = hashMapOf(
                                             "requesterId" to CurrentUser.user.id.toString(),
                                             "addresseeId" to userList[position].id.toString(),
-                                            "requesterName" to CurrentUser.user.name.toString(),
-                                            "requesterSurname" to CurrentUser.user.surname.toString(),
-                                            "addresseeName" to userList[position].name.toString(),
-                                            "addresseeSurname" to userList[position].surname.toString(),
                                             "sendTime" to Calendar.getInstance().toString(),
-                                            "requesterPhotoUrl" to CurrentUser.user.photoUrl.toString(),
-                                            "addresseePhotoUrl" to userList[position].photoUrl.toString(),
                                             "isValid" to true,
                                             "isAccepted" to false
                                         )
