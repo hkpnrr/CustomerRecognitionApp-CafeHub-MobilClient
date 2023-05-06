@@ -7,7 +7,8 @@
     <item android:title="QR"
         android:id="@+id/qr"
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"/>
-    <item android:title="Profil"
-        android:id="@+id/profile"
-        android:icon="@drawable/ic_baseline_person_24"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Ayarlar" />
 </menu>

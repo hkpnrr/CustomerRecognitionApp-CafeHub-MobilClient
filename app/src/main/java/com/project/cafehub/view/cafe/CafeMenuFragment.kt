@@ -18,7 +18,9 @@ import com.project.cafehub.adapter.CategoryOnClickInterface
 import com.project.cafehub.adapter.ProductAdapter
 import com.project.cafehub.adapter.ProductOnClickInterface
 import com.project.cafehub.databinding.FragmentCafeMenuBinding
+import com.project.cafehub.model.Category
 import com.project.cafehub.model.Product
+import com.project.cafehub.model.Rating
 
 class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickInterface, ProductOnClickInterface {
 
@@ -26,7 +28,7 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
     private lateinit var db: FirebaseFirestore
     private var currentCafeId : String? = null
     private lateinit var productList: ArrayList<Product>
-    private lateinit var categoryList: ArrayList<String>
+    private lateinit var categoryList: ArrayList<Category>
     private lateinit var productAdapter: ProductAdapter
     private lateinit var categoryAdapter: CategoryAdapter
 
@@ -61,10 +63,14 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
         db.collection("Cafe").document(currentCafeId!!).collection("Category")
             .get().addOnSuccessListener { result ->
             for (document in result) {
+                val id = document.get("id") as String
                 val categoryName = document.get("name") as String
-                categoryList.add(categoryName)
+                val order = document.get("order") as Long
+
+                val category = Category(id, categoryName, order)
+                categoryList.add(category)
             }
-                arrangeCategoryList()
+                sortCategoryList()
             categoryAdapter.notifyDataSetChanged()
         }.addOnFailureListener{
             Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -111,7 +117,7 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
                         val product = Product(id, name, price, imageUrl, isBestSelling, category)
                         productList.add(product)
                     }
-                    categoryAdapter.notifyDataSetChanged()
+                    productAdapter.notifyDataSetChanged()
                 }.addOnFailureListener{
                     Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
@@ -124,24 +130,9 @@ class CafeMenuFragment : Fragment(R.layout.fragment_cafe_menu), CategoryOnClickI
         TODO("Not yet implemented")
     }
 
-
-    fun arrangeCategoryList() {
-        for (i in categoryList.indices) {
-            if(categoryList[i] == "En Çok Satanlar" && i != 0) {
-                var tempCategory = categoryList[0]
-                categoryList[0] = categoryList[i]
-                categoryList[i] = tempCategory
-            }
-            else if(categoryList[i] == "Sıcak" && i != 1) {
-                var tempCategory = categoryList[1]
-                categoryList[1] = categoryList[i]
-                categoryList[i] = tempCategory
-            }
-            else if(categoryList[i] == "Soğuk" && i != 2) {
-                var tempCategory = categoryList[2]
-                categoryList[2] = categoryList[i]
-                categoryList[i] = tempCategory
-            }
+    fun sortCategoryList() {
+        categoryList.sortWith { o1, o2 ->
+            o1.order!!.compareTo(o2.order!!)
         }
     }
 }

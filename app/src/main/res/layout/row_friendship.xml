@@ -3,17 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_image_background"
     android:orientation="horizontal"
-    android:layout_marginBottom="15dp"
-    android:weightSum="10">
+    android:layout_margin="15dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="8">
+        android:orientation="horizontal">
         <ImageView
             android:id="@+id/ivUserPhoto"
             android:layout_width="50dp"
@@ -30,23 +27,5 @@
             android:textSize="23sp"
             android:layout_gravity="center"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="2"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/ivAddFriend"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
-            android:onClick="addFriend"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/add_friend" />
-    </LinearLayout>
-
-
-
 
 </LinearLayout>

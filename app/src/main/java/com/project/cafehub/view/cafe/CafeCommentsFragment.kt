@@ -80,8 +80,8 @@ class CafeCommentsFragment : Fragment(R.layout.fragment_cafe_comments) {
     }
 
     fun sortRatingList() {
-        ratingList.sortWith<Rating>(Comparator<Rating> { o1, o2 ->
+        ratingList.sortWith { o1, o2 ->
             o1.passingTime!!.compareTo(o2.passingTime!!)
-        })
+        }
     }
 }
