@@ -2,6 +2,7 @@ package com.project.cafehub.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FieldValue
@@ -37,6 +38,21 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
         val namesurname = "${userList[position].name} ${userList[position].surname}"
         holder.binding.tvUserName.text = namesurname
         Picasso.get().load(userList[position].photoUrl).into(holder.binding.ivUserPhoto)
+        if(userList.get(position).id==CurrentUser.user.id){
+            holder.binding.ivAddFriend.visibility=View.INVISIBLE
+        }
+        db.collection("Friendship")
+            .where(Filter.or(Filter.and(
+                Filter.equalTo("firstUserId",CurrentUser.user.id.toString()),
+                Filter.equalTo("secondUserId",userList[position].id)),
+                Filter.and(
+                    Filter.equalTo("secondUserId",CurrentUser.user.id.toString()),
+                    Filter.equalTo("firstUserId",userList[position].id)))
+            ).get().addOnSuccessListener {
+                if(!it.isEmpty){
+                    holder.binding.ivAddFriend.visibility=View.INVISIBLE
+                }
+            }
 
         holder.binding.ivAddFriend.setOnClickListener {
             if(CurrentUser.user.id==userList[position].id){
