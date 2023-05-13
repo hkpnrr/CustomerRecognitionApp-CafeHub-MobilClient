@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -42,7 +43,7 @@ class FriendshipRequestAdapter(val friendshipRequestList: ArrayList<FriendshipRe
             val friendshipData = hashMapOf(
                 "firstUserId" to CurrentUser.user.id.toString(),
                 "secondUserId" to friendshipRequestList[position].requesterId,
-                "time" to Calendar.getInstance().toString()
+                "time" to FieldValue.serverTimestamp()
             )
             db.collection("Friendship").add(friendshipData).addOnSuccessListener {
 

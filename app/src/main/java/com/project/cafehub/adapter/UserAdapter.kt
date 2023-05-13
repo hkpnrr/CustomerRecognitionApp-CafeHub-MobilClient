@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -65,7 +66,7 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                                         val request = hashMapOf(
                                             "requesterId" to CurrentUser.user.id.toString(),
                                             "addresseeId" to userList[position].id.toString(),
-                                            "sendTime" to Calendar.getInstance().toString(),
+                                            "sendTime" to FieldValue.serverTimestamp(),
                                             "isValid" to true,
                                             "isAccepted" to false
                                         )

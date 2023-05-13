@@ -1,6 +1,7 @@
 package com.project.cafehub.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.project.cafehub.databinding.RowFriendshipBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.Friendship
+import com.project.cafehub.view.chat.ChatSessionActivity
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -35,6 +37,19 @@ class FriendshipAdapter(val friendshipList: ArrayList<Friendship>) : RecyclerVie
         val namesurname = "${friendshipList[position].friendName}"+" "+"${friendshipList[position].friendSurname}"
         holder.binding.tvUserName.text = namesurname
         Picasso.get().load(friendshipList[position].friendPhotoUrl).into(holder.binding.ivUserPhoto)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context,ChatSessionActivity::class.java)
+
+            if(CurrentUser.user.id.toString()!=friendshipList[position].firstUserId){
+                intent.putExtra("toId",friendshipList[position].firstUserId)
+            }
+            else{
+                intent.putExtra("toId",friendshipList[position].secondUserId)
+            }
+            holder.itemView.context.startActivity(intent)
+
+        }
 
     }
 }

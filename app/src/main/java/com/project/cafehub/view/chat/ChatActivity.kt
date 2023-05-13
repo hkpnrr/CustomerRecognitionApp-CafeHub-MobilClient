@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -29,8 +31,12 @@ class ChatActivity : AppCompatActivity() {
         setContentView(view)
         db = Firebase.firestore
 
+        friendshipList=ArrayList()
+
         initToolbar()
-        checkFriendshipRequests()
+        initRvAdapter()
+
+        fetchFriendshipData()
     }
 
     override fun onResume() {
@@ -65,6 +71,64 @@ class ChatActivity : AppCompatActivity() {
     fun  redirectToFriendshipRequests(view:View){
         val intent = Intent(this@ChatActivity,FriendshipRequestsActivity::class.java)
         startActivity(intent);
+    }
+
+    private fun initRvAdapter(){
+        binding.rvFriendship.layoutManager = LinearLayoutManager(applicationContext)
+        friendshipAdapter = FriendshipAdapter(friendshipList)
+        binding.rvFriendship.adapter = friendshipAdapter
+    }
+
+    fun fetchFriendshipData(){
+        db.collection("Friendship")
+            .where(
+                Filter.or(
+                    Filter.equalTo("firstUserId",CurrentUser.user.id.toString()),
+                Filter.equalTo("secondUserId",CurrentUser.user.id.toString())))
+            .get().addOnSuccessListener {
+                for (document in it){
+
+                    println("dokuman "+document.get("firstUserId").toString())
+
+                    var temp = Friendship(document.get("firstUserId").toString(),
+                        document.get("secondUserId").toString(),
+                        document.get("time").toString(),
+                        null,null,null)
+
+                    friendshipList.add(temp)
+
+                }
+
+                for ((index,value) in friendshipList.withIndex()){
+
+                    if(CurrentUser.user.id.toString()!=value.firstUserId){
+
+                        db.collection("User").document(value.firstUserId)
+                            .get().addOnSuccessListener {
+                                friendshipList[index].friendName=it.get("name").toString()
+                                friendshipList[index].friendSurname=it.get("surname").toString()
+                                friendshipList[index].friendPhotoUrl=it.get("photoUrl").toString()
+                                friendshipAdapter.notifyDataSetChanged()
+                            }.addOnFailureListener {
+
+                            }
+
+                    }
+                    else{
+                        db.collection("User").document(value.secondUserId)
+                            .get().addOnSuccessListener {
+                                friendshipList[index].friendName=it.get("name").toString()
+                                friendshipList[index].friendSurname=it.get("surname").toString()
+                                friendshipList[index].friendPhotoUrl=it.get("photoUrl").toString()
+                                friendshipAdapter.notifyDataSetChanged()
+
+                            }.addOnFailureListener {
+
+                            }
+                    }
+                }
+
+            }
     }
 
 }
