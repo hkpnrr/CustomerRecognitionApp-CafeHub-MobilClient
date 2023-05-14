@@ -32,7 +32,8 @@ class ChatSessionActivity : AppCompatActivity() {
         binding = ActivityChatSessionBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
+
         db = Firebase.firestore
         messageList = ArrayList()
         adapter= ChatAdapter()
@@ -42,6 +43,7 @@ class ChatSessionActivity : AppCompatActivity() {
         initToolbar()
         fetchToUser()
         displayMessages()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
 
     }
