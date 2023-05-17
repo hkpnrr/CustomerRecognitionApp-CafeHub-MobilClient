@@ -23,6 +23,7 @@ import com.project.cafehub.databinding.ActivityLoginBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
 import com.project.cafehub.view.homePage.HomePageActivity
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -53,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkCurrentUser(){
         val currentUser = auth.currentUser
         if(currentUser != null) {
+
             //fill CurrentUser properties
 
             db.collection("User").whereEqualTo("email",currentUser.email).get()
@@ -66,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                         CurrentUser.user.birthdate= document.data["birthdate"] as String?
                         CurrentUser.user.isActive= document.data["isActive"] as Boolean?
                         CurrentUser.user.activeCafeId= document.data["activeCafeId"] as String?
+
 
 
                     }
@@ -194,4 +197,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
