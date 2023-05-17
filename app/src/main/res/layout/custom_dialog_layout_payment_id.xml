@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Siparişinizin tanımlanabilmesi için kişisel kodunuz: "
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/paymentIdTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Başlık"
+        android:textSize="40sp"
+        android:textColor="#E67917"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+
+</LinearLayout>

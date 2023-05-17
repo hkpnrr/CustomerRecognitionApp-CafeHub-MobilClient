@@ -36,6 +36,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.NonDisposableHandle.parent
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 class QrFragment : Fragment(R.layout.fragment_qr) {
 
@@ -138,7 +139,7 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
             db.collection("Cafe").document(CurrentUser.user.activeCafeId.toString()).collection("ActiveUserList")
                 .document(CurrentUser.user.id.toString()).delete().addOnSuccessListener {
                     db.collection("User").document(CurrentUser.user.id.toString())
-                        .update("isActive",false,"activeCafeId","")
+                        .update("isActive",false,"activeCafeId","","paymentId",null)
                         .addOnSuccessListener {
                             CurrentUser.user.isActive=false
                             CurrentUser.user.activeCafeId=""
@@ -283,6 +284,10 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                                         .addOnSuccessListener {
                                             CurrentUser.user.isActive=true
                                             CurrentUser.user.activeCafeId=scannedCafe.id
+
+                                            //generate random payment ıd
+                                            generateRandomPaymentId(scannedCafe.id.toString())
+
                                             val intent = Intent(activity, CurrentCafeActivity::class.java)
                                             intent.putExtra("currentCafe", scannedCafe)
                                             startActivity(intent)
@@ -306,6 +311,38 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    private fun generateRandomPaymentId(scannedCafeId:String){
+        var randomPaymentId=0
+        val random = Random()
+        val min = 1000
+        val max = 9999
+        randomPaymentId = random.nextInt(max - min + 1) + min
+        println("sayımız: "+randomPaymentId)
+
+        db.collection("Cafe").document(scannedCafeId).collection("ActiveUserList")
+            .whereEqualTo("paymentId",randomPaymentId).get().addOnSuccessListener {
+                if(it.isEmpty){
+
+                    db.collection("User").document(CurrentUser.user.id.toString())
+                        .update("paymentId",randomPaymentId).addOnSuccessListener {
+
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                        }
+                }
+                else{
+                    println("GİRDİ BAŞKAN")
+                    generateRandomPaymentId(scannedCafeId)
+                }
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_SHORT).show()
+
+            }
     }
 
 }
