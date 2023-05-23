@@ -14,6 +14,7 @@ import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
 import com.project.cafehub.view.authentication.LoginActivity
 import com.project.cafehub.view.friendship.FriendshipActivity
+import com.project.cafehub.view.order.OrderHistoryActivity
 import com.project.cafehub.view.settings.ProfileSettingsActivity
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -59,7 +60,7 @@ class SettingsFragment : Fragment() {
         startActivity(intent)
     }
     fun redirectToHistory(){
-        val intent = Intent(requireContext(), ProfileSettingsActivity::class.java)
+        val intent = Intent(requireContext(), OrderHistoryActivity::class.java)
         startActivity(intent)
     }
     fun redirectToFriends(){
