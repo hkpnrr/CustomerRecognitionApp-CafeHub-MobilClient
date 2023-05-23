@@ -48,7 +48,7 @@ class CafeCommentsFragment : Fragment(R.layout.fragment_cafe_comments) {
         db.collection("Rating").whereEqualTo("cafeId", currentCafeId)
             .get().addOnSuccessListener { result ->
                 for (document in result) {
-                    val id = document.get("id") as String
+                    val id = document.id
                     val comment = document.get("comment") as String
                     val score = (document.get("score") as Long).toInt()
                     val userId = document.get("userId") as String

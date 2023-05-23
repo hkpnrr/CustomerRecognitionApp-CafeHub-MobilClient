@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.order.OrderRatingActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E1D9D9"
+        android:layout_gravity="center"
+        app:navigationIcon="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/cafehub_color_logo"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="30dp"
+            android:layout_gravity="center"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/topLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="3dp"
+        android:background="@drawable/round_corner">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_cafe"
+                android:layout_weight="2"
+                android:layout_gravity="center">
+
+            </ImageView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="8">
+                <TextView
+                    android:id="@+id/cafeNameTopTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CAFE NAME"
+                    android:layout_gravity="center"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#E67917">
+
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_marginTop="3dp">
+                    <TextView
+                        android:id="@+id/dateTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="22.05.2023"
+                        android:gravity="center"
+                        android:layout_weight="4"
+                        android:textColor="@color/black">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/timeTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="14:22"
+                        android:gravity="center"
+                        android:layout_weight="3"
+                        android:textColor="@color/black">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/priceTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="100 TL"
+                        android:gravity="center"
+                        android:layout_weight="3"
+                        android:textColor="@color/black">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/topLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/cafeNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CAFE NASILDI"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp">
+
+        </TextView>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="1"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Yorumunuz"
+            android:lines="5"
+           >
+
+        </EditText>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sendRatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="sendRating"
+        android:text="Gönder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomLinearLayout">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

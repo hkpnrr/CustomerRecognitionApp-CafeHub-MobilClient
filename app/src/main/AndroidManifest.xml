@@ -18,6 +18,12 @@
         android:theme="@style/Theme.CafeHub"
         tools:targetApi="31">
         <activity
+            android:name=".view.order.OrderRatingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.order.OrderHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.chat.ChatSessionActivity"
             android:exported="false" />
         <activity
