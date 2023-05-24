@@ -1,5 +1,6 @@
 package com.project.cafehub.view.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -72,6 +73,8 @@ class OrderRatingActivity : AppCompatActivity() {
 
             db.collection("Order").document(currentOrder.id).update("isRated",true).addOnSuccessListener {
 
+                val intent = Intent(this, OrderHistoryActivity::class.java)
+                startActivity(intent)
                 finish()
             }
         }.addOnFailureListener {

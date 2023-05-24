@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:padding="3dp"
+    android:background="@drawable/round_corner">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_cafe"
+            android:layout_weight="2"
+            android:layout_gravity="center">
+
+        </ImageView>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="8">
+            <TextView
+                android:id="@+id/cafeNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CAFE NAME"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#E67917">
+
+            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_marginTop="3dp">
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="22.05.2023"
+                    android:gravity="center"
+                    android:layout_weight="4"
+                    android:textColor="@color/black">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/timeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="14:22"
+                    android:gravity="center"
+                    android:layout_weight="3"
+                    android:textColor="@color/black">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="100 TL"
+                    android:gravity="center"
+                    android:layout_weight="3"
+                    android:textColor="@color/black">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/rateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Değerlendir"
+            android:textStyle="bold"
+            android:textSize="13dp"
+            android:drawableEnd="@drawable/ic_star_enable"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#1FC2D1"
+            >
+        </Button>
+    </LinearLayout>
+</LinearLayout>
