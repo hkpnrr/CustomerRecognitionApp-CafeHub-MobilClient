@@ -50,6 +50,8 @@ class OrderRatingActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, OrderHistoryActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }

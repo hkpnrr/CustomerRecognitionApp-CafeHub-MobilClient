@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.cafehub.R
 import com.project.cafehub.model.Order
+import com.project.cafehub.view.order.OrderDetailActivity
 import com.project.cafehub.view.order.OrderRatingActivity
 
 class OrderHistoryAdapter(private val activity: Activity, private val context: Context, val orderList: ArrayList<Order>): RecyclerView.Adapter<OrderHistoryAdapter.OrderHolder>() {
@@ -88,6 +89,16 @@ class OrderHistoryAdapter(private val activity: Activity, private val context: C
                 activity.finish()
 
             }
+        }
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, OrderDetailActivity::class.java)
+            var tempOrder = orderList.get(position)
+            tempOrder.serverDate=null
+            intent.putExtra("order", tempOrder)
+            holder.itemView.context.startActivity(intent)
+            activity.finish()
+
         }
 
 
