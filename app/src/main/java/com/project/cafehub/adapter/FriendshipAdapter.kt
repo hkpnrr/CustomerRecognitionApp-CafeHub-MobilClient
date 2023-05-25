@@ -31,11 +31,10 @@ class FriendshipAdapter(val friendshipList: ArrayList<Friendship>) : RecyclerVie
         return friendshipList.size
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendshipHolder, position: Int) {
 
-        val namesurname = "${friendshipList[position].friendName}"+" "+"${friendshipList[position].friendSurname}"
-        holder.binding.tvUserName.text = namesurname
+        val nameSurname = friendshipList[position].friendName+" "+friendshipList[position].friendSurname
+        holder.binding.tvUserName.text = nameSurname
         Picasso.get().load(friendshipList[position].friendPhotoUrl).into(holder.binding.ivUserPhoto)
 
         holder.itemView.setOnClickListener {

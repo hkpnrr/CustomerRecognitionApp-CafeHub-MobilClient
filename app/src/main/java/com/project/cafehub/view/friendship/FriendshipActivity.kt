@@ -57,8 +57,6 @@ class FriendshipActivity : AppCompatActivity() {
             .get().addOnSuccessListener {
                 for (document in it){
 
-                    println("dokuman "+document.get("firstUserId").toString())
-
                     var temp = Friendship(document.get("firstUserId").toString(),
                     document.get("secondUserId").toString(),
                         document.get("time").toString(),
