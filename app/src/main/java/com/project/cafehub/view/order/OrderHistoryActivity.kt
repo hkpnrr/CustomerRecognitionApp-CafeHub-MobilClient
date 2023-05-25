@@ -44,7 +44,7 @@ class OrderHistoryActivity : AppCompatActivity() {
 
                     val tempOrder = Order(document.id,document.get("cafeId").toString(),null,document.get("time") as Timestamp,
                     null,null,document.get("userId").toString(),document.get("cost").toString(),
-                        document.get("isRated") as Boolean)
+                        document.get("isRated") as Boolean,null)
 
                     val date = Date(tempOrder.serverDate!!.seconds * 1000)
                     val formatTime = SimpleDateFormat("HH:mm")
@@ -57,8 +57,18 @@ class OrderHistoryActivity : AppCompatActivity() {
                     db.collection("Cafe").whereEqualTo("id",tempOrder.cafeId).get().addOnSuccessListener {snp->
                         for (document in snp){
                             tempOrder.cafeName=document.get("name").toString()
-                            orderList.add(tempOrder)
-                            orderHistoryAdapter.notifyDataSetChanged()
+                            db.collection("Rating").whereEqualTo("orderId",tempOrder.id)
+                                .get().addOnSuccessListener {
+
+                                    for (doc in it){
+                                        tempOrder.rating = ((doc.get("score") as Long?)!!.toFloat())
+                                    }
+                                    orderList.add(tempOrder)
+                                    orderHistoryAdapter.notifyDataSetChanged()
+                                }.addOnFailureListener {
+
+                                }
+
                         }
 
                     }.addOnFailureListener {
@@ -80,15 +90,9 @@ class OrderHistoryActivity : AppCompatActivity() {
 
     private fun initRvAdapter(){
         binding.rvOrderHistory.layoutManager = LinearLayoutManager(applicationContext)
-        orderHistoryAdapter = OrderHistoryAdapter(applicationContext ,orderList)
+        orderHistoryAdapter = OrderHistoryAdapter(this,applicationContext ,orderList)
         binding.rvOrderHistory.adapter = orderHistoryAdapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        orderList.clear()
-        initRvAdapter()
-        fetchOrderHistory()
-    }
 
 }

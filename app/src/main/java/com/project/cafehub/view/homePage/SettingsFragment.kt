@@ -13,6 +13,7 @@ import com.project.cafehub.databinding.FragmentSettingsBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.User
 import com.project.cafehub.view.authentication.LoginActivity
+import com.project.cafehub.view.coupon.CouponActivity
 import com.project.cafehub.view.friendship.FriendshipActivity
 import com.project.cafehub.view.order.OrderHistoryActivity
 import com.project.cafehub.view.settings.ProfileSettingsActivity
@@ -71,6 +72,11 @@ class SettingsFragment : Fragment() {
         val intent = Intent(requireContext(), ProfileSettingsActivity::class.java)
         startActivity(intent)
     }
+    fun redirectToCoupons(){
+        val intent = Intent(requireContext(), CouponActivity::class.java)
+        startActivity(intent)
+    }
+
 
     fun logout(){
         auth.signOut()
@@ -100,6 +106,10 @@ class SettingsFragment : Fragment() {
 
         binding.logoutCardView.setOnClickListener{
             logout()
+        }
+
+        binding.couponsCardView.setOnClickListener {
+            redirectToCoupons()
         }
     }
 

@@ -1,74 +1,107 @@
 package com.project.cafehub.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.project.cafehub.databinding.RowOrderHistoryBinding
+import com.project.cafehub.R
 import com.project.cafehub.model.Order
+import com.project.cafehub.view.order.OrderDetailActivity
 import com.project.cafehub.view.order.OrderRatingActivity
 
-class OrderHistoryAdapter(private val context: Context, val orderList: ArrayList<Order>): RecyclerView.Adapter<OrderHistoryAdapter.OrderHolder>() {
+class OrderHistoryAdapter(private val activity: Activity, private val context: Context, val orderList: ArrayList<Order>): RecyclerView.Adapter<OrderHistoryAdapter.OrderHolder>() {
 
     private lateinit var db: FirebaseFirestore
-    class OrderHolder(val binding: RowOrderHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    private val VIEW_TYPE_ORDER_RATED =1
+    private val VIEW_TYPE_ORDER_NOT_RATED =2
+    class OrderHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
     fun showToastMessage(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+    override fun getItemViewType(position: Int): Int {
+
+        val order =orderList.get(position)
+
+        if(order.isRated== true){
+            return VIEW_TYPE_ORDER_RATED
+        }
+        else{
+            return VIEW_TYPE_ORDER_NOT_RATED
+        }
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHolder {
 
-        val binding = RowOrderHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        db=Firebase.firestore
-        return OrderHolder(binding)
+        if(viewType==VIEW_TYPE_ORDER_RATED){
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_order_history_rated,parent,false)
+            return OrderHolder(view)
+        }
+        else{
+
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_order_history_not_rated,parent,false)
+            return OrderHolder(view)
+        }
     }
 
-    override fun onBindViewHolder(holder: OrderHistoryAdapter.OrderHolder, position: Int) {
-        holder.binding.cafeNameTextView.text = orderList.get(position).cafeName
-        holder.binding.dateTextView.text = orderList.get(position).date
-        holder.binding.timeTextView.text = orderList.get(position).time
-        holder.binding.priceTextView.text = orderList.get(position).cost + " TL"
+    override fun onBindViewHolder(holder: OrderHolder, position: Int) {
+        val cafeNameTextView=holder.itemView.findViewById<TextView>(R.id.cafeNameTextView)
+        cafeNameTextView.text= orderList.get(position).cafeName
+
+        val dateTextView=holder.itemView.findViewById<TextView>(R.id.dateTextView)
+        dateTextView.text= orderList.get(position).date
+
+        val timeTextView=holder.itemView.findViewById<TextView>(R.id.timeTextView)
+        timeTextView.text= orderList.get(position).time
+
+        val priceTextView=holder.itemView.findViewById<TextView>(R.id.priceTextView)
+        priceTextView.text= orderList.get(position).cost + " TL"
+
 
         if(orderList.get(position).isRated){
-            holder.binding.rateButton.visibility=View.GONE
 
-            db.collection("Rating").whereEqualTo("orderId",orderList.get(position).id)
-                .get().addOnSuccessListener {
-                    for (doc in it){
-                        holder.binding.ratingBar.rating= ((doc.get("score") as Long?)!!.toFloat())
-                        holder.binding.ratingBar.setIsIndicator(true)
-                    }
-                }.addOnFailureListener {
-                    showToastMessage(it.localizedMessage)
-                }
+            val ratingBar=holder.itemView.findViewById<RatingBar>(R.id.ratingBar)
+            ratingBar.rating= orderList.get(position).rating!!
+            ratingBar.setIsIndicator(true)
 
         }
         else{
-            holder.binding.ratingBar.visibility=View.GONE
+
+            val rateButton=holder.itemView.findViewById<Button>(R.id.rateButton)
+
+            rateButton.setOnClickListener {
+                val intent = Intent(holder.itemView.context, OrderRatingActivity::class.java)
+                var tempOrder = orderList.get(position)
+                tempOrder.serverDate=null
+                intent.putExtra("order", tempOrder)
+                holder.itemView.context.startActivity(intent)
+                activity.finish()
+
+            }
         }
 
-        holder.binding.rateButton.setOnClickListener {
-            val intent = Intent(holder.itemView.context, OrderRatingActivity::class.java)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, OrderDetailActivity::class.java)
             var tempOrder = orderList.get(position)
             tempOrder.serverDate=null
             intent.putExtra("order", tempOrder)
             holder.itemView.context.startActivity(intent)
+            activity.finish()
 
         }
 
 
-        holder.itemView.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, CafeActivity::class.java)
-//            intent.putExtra("cafe", orderList.get(position))
-//            holder.itemView.context.startActivity(intent)
-        }
 
     }
 

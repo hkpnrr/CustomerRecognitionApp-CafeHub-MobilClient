@@ -12,7 +12,8 @@ data class Order(
     var date:String?,
     var userId:String,
     var cost:String,
-    var isRated:Boolean
+    var isRated:Boolean,
+    var rating:Float?
 
 ): Serializable {
 }
