@@ -49,7 +49,7 @@ class OrderDetailActivity : AppCompatActivity() {
     private fun fetchProducts(){
         productList.clear()
 
-        db.collection("Order").document(currentOrder.id).collection("Products").get()
+        db.collection("Order").document(currentOrder.id).collection("Product").get()
             .addOnSuccessListener {
 
             for (document in it){
