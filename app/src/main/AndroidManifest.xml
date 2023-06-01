@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CafeHub"
         tools:targetApi="31">
         <activity
+            android:name=".view.recommendation.RecommendationActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.coupon.CouponActivity"
             android:exported="false"
             android:label="@string/title_activity_coupon"
