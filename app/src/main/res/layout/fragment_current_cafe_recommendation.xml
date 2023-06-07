@@ -4,40 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.currentCafe.CurrentCafeRecommendationFragment"
     android:layout_marginEnd="5dp"
-    android:clickable="true"
-    android:focusable="true"
     android:elevation="10dp"
     android:orientation="vertical"
     app:layout_constraintDimensionRatio="2:1">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#E1D9D9"
-        android:layout_gravity="center"
-        app:navigationIcon="@drawable/ic_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/logoView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/cafehub_color_logo"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:adjustViewBounds="true"
-            android:maxHeight="30dp"
-            android:layout_gravity="center"/>
-    </androidx.appcompat.widget.Toolbar>
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -151,6 +126,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="397dp" />
+            <Button
+                android:id="@+id/buttonRecommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvProductName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="30dp"
+                android:text="Tekrar tavsiye al">
+
+            </Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
