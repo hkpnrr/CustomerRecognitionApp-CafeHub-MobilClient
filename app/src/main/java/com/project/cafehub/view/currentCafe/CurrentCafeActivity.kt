@@ -44,7 +44,7 @@ class CurrentCafeActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.social -> replaceFragment(ActiveUserListFragment())
                 R.id.spotify -> replaceFragment(SpotifyFragment())
-                //R.id.profile -> // Intent yapılacak
+                R.id.recommendation->replaceFragment(CurrentCafeRecommendationFragment())
             }
             true
         }

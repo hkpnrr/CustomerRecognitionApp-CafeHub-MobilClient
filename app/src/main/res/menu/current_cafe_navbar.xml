@@ -3,11 +3,11 @@
 
     <item android:title="Sosyal"
         android:id="@+id/social"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_people"/>
     <item android:title="Spotify"
         android:id="@+id/spotify"
-        android:icon="@drawable/ic_baseline_qr_code_scanner_24"/>
-    <item android:title="Profil"
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_baseline_person_24"/>
+        android:icon="@drawable/ic_music"/>
+    <item android:title="Tavsiye"
+        android:id="@+id/recommendation"
+        android:icon="@drawable/ic_coffee"/>
 </menu>
