@@ -1,12 +1,18 @@
 package com.project.cafehub.view.currentCafe
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.cafehub.databinding.ActivitySpotifyBinding
 import com.project.cafehub.model.AccessTokenResponse
+import com.project.cafehub.model.Cafe
+import com.project.cafehub.model.Product
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
@@ -19,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SpotifyActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySpotifyBinding
+    private lateinit var db: FirebaseFirestore
 
     private val REDIRECT_URI = "com.project.cafehub://callback"
 
@@ -35,9 +42,12 @@ class SpotifyActivity : AppCompatActivity() {
     private lateinit var authService: SpotifyAuthService
     private lateinit var apiService: SpotifyApiService
 
-    private lateinit var accessToken: String
+    private lateinit var userAccessToken: String
+    private lateinit var cafeAccessToken: String
     private lateinit var refreshToken: String
     private var tokenExpirationTime: Long = 0
+
+    private lateinit var currentCafe: Cafe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +55,13 @@ class SpotifyActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        db = Firebase.firestore
+        currentCafe = (intent.getSerializableExtra("currentCafe") as Cafe?)!!
+
         initToolbar()
 
         setupServices()
+        getCafeAccessToken()
         handleLoginButtonClick()
         handleSendSongButtonClick()
     }
@@ -59,6 +73,19 @@ class SpotifyActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getCafeAccessToken() {
+        db.collection("Cafe").document(currentCafe.id!!).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    cafeAccessToken = document.get("accessToken") as String
+                }
+            }.addOnFailureListener{
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
     private fun setupServices() {
         val retrofit_auth = Retrofit.Builder()
@@ -116,7 +143,7 @@ class SpotifyActivity : AppCompatActivity() {
                 // Response was successful and contains auth token
                 AuthorizationResponse.Type.TOKEN -> {
                     // Handle successful response
-                    accessToken = response.accessToken
+                    cafeAccessToken = response.accessToken
                     //addToPlaybackQueue("spotify:track:4iV5W9uYEdYUVa79Axb7Rh")
                 }
                 AuthorizationResponse.Type.CODE -> {
@@ -154,7 +181,7 @@ class SpotifyActivity : AppCompatActivity() {
 
                     val accessTokenResponse = response.body()
                     if (accessTokenResponse != null) {
-                        accessToken = accessTokenResponse.accessToken
+                        userAccessToken = accessTokenResponse.accessToken
                         refreshToken = accessTokenResponse.refreshToken.toString()
                         tokenExpirationTime = System.currentTimeMillis() + (accessTokenResponse.expiresIn * 1000)
                         // Store the access token, refresh token, and expiration time securely for future API requests
@@ -191,7 +218,8 @@ class SpotifyActivity : AppCompatActivity() {
             // Access token has expired, refresh the token
             refreshAccessToken()
         } else {
-            val authHeader = "Bearer $accessToken"
+            val token = "BQBrUcp1fzKa91Ekj7SWKBrrIzwBij66voiCcQtkYSvE7ajNzadsRfrr9z9uFvbS3Fie5CNpnTTCprJx-b9-2WcrjhxryfTYYNNTV2aANC9f98zz2R24L0MdLlEZq-CDJu3mjjXCt4jru3jv1G8lX1iDqfhjYELwKl48Qm1wocdNhlKLC4SGcOrlbgEo0hTlXyeS1cntNdD2x1bwojhS1p-C18H5F3wwj70Npw6gAkEp"
+            val authHeader = "Bearer $userAccessToken"
             val addToQueueCall = apiService.addToQueue(authHeader, songUri)
             addToQueueCall.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -231,7 +259,7 @@ class SpotifyActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val accessTokenResponse = response.body()
                     if (accessTokenResponse != null) {
-                        accessToken = accessTokenResponse.accessToken
+                        userAccessToken = accessTokenResponse.accessToken
                         tokenExpirationTime = System.currentTimeMillis() + (accessTokenResponse.expiresIn * 1000)
                         // Update the access token and expiration time securely
                         //addToPlaybackQueue("spotify:track:4iV5W9uYEdYUVa79Axb7Rh")

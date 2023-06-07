@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
 import com.project.cafehub.databinding.FragmentSpotifyBinding
 import com.project.cafehub.model.AccessTokenResponse
+import com.project.cafehub.model.Cafe
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
@@ -32,9 +33,13 @@ class SpotifyFragment :  Fragment(R.layout.fragment_spotify){
 
     private lateinit var binding : FragmentSpotifyBinding
     private lateinit var db: FirebaseFirestore
+    private lateinit var currentCafe : Cafe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val bundle = arguments
+        currentCafe = bundle?.getSerializable("currentCafe") as Cafe
 
         binding = FragmentSpotifyBinding.bind(view)
         db = Firebase.firestore
@@ -42,6 +47,7 @@ class SpotifyFragment :  Fragment(R.layout.fragment_spotify){
         val spotifyButton = binding.connectSpotify
         spotifyButton.setOnClickListener {
             val intent = Intent(activity, SpotifyActivity::class.java)
+            intent.putExtra("currentCafe", currentCafe)
             startActivity(intent)
         }
     }
