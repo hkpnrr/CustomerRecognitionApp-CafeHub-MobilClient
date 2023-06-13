@@ -15,6 +15,8 @@ import com.project.cafehub.R
 import com.project.cafehub.adapter.RatingAdapter
 import com.project.cafehub.databinding.FragmentCafeCommentsBinding
 import com.project.cafehub.model.Rating
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.Comparator
 
@@ -71,7 +73,13 @@ class CafeCommentsFragment : Fragment(R.layout.fragment_cafe_comments) {
         for (rating in ratingList) {
             scoreSum += rating.score!!
         }
-        binding.tvCafeRating.text = (scoreSum / ratingList.size.toDouble()).toString()
+
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
+        val roundoff = df.format(scoreSum / ratingList.size.toDouble())
+
+        binding.tvCafeRating.text = (roundoff).toString()
     }
 
     fun calculatePassingTime(ratingDate: Date) : Long?{
