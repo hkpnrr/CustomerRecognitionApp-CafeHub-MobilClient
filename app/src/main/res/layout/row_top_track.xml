@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_top_track_background"
+    android:layout_marginBottom="15dp">
+
+    <ImageView
+        android:id="@+id/ivTrackImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/llSongDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/ivTrackImage"
+        android:layout_toStartOf="@+id/buttonSendSong"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/tvSongName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Song Name"
+            android:textSize="17sp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvSingerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Singer Name"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSendSong"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:onClick="sendSong"
+        android:text="Gönder"
+        android:textColor="#121212"
+        android:textSize="12sp"
+        android:backgroundTint="#1DB954"
+        android:textAllCaps="false" />
+
+</RelativeLayout>
