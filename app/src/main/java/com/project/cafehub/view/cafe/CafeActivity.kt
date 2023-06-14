@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityCafeBinding
 import com.project.cafehub.model.Cafe
 import com.project.cafehub.model.CafeWorkHours
+import com.project.cafehub.model.Product
+import com.project.cafehub.model.Rating
 import com.squareup.picasso.Picasso
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,6 +26,8 @@ class CafeActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var currentCafe: Cafe
     private lateinit var currentCafeWorkHours: CafeWorkHours
+    private lateinit var ratingList: ArrayList<Rating>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCafeBinding.inflate(layoutInflater)
@@ -28,6 +36,8 @@ class CafeActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         currentCafe = (intent.getSerializableExtra("cafe") as Cafe?)!!
+
+        ratingList = ArrayList()
 
         replaceFragment(CafeMenuFragment())
 
@@ -38,6 +48,9 @@ class CafeActivity : AppCompatActivity() {
         getCafeWorkHours()
 
         displayClosingHour()
+
+        displayRate()
+        displayMinPrice()
 
         binding.navigationBar.setOnItemSelectedListener {
             when (it.itemId) {
@@ -140,6 +153,50 @@ class CafeActivity : AppCompatActivity() {
                 Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
 
             }
+    }
+
+    fun displayRate(){
+        db.collection("Rating").whereEqualTo("cafeId", currentCafe.id)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    val score = (document.get("score") as Long).toInt()
+
+                    val rating = Rating(null, null, score, null, null, null, null)
+                    ratingList.add(rating)
+                }
+                editCafeRating()
+            }.addOnFailureListener{
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun editCafeRating() {
+        var scoreSum: Double = 0.0
+        for (rating in ratingList) {
+            scoreSum += rating.score!!
+        }
+
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
+        val roundoff = df.format(scoreSum / ratingList.size.toDouble())
+
+        binding.textViewCafeRate.text = (roundoff).toString()
+    }
+
+    fun displayMinPrice(){
+
+        db.collection("Cafe").document(currentCafe.id.toString()).collection("Product").orderBy("price",
+            Query.Direction.ASCENDING).limit(1).get().addOnSuccessListener {
+                for (document in it){
+
+                    val price = document.get("price") as Long
+
+                    val product = Product(null, null, price, null, null, null)
+
+                    binding.textViewMinPrice.text="min. "+product.price+" TL"
+                }
+        }
     }
 
 
