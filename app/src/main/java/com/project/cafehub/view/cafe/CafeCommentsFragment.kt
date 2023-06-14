@@ -69,17 +69,22 @@ class CafeCommentsFragment : Fragment(R.layout.fragment_cafe_comments) {
     }
 
     fun editCafeRating() {
-        var scoreSum: Double = 0.0
-        for (rating in ratingList) {
-            scoreSum += rating.score!!
+        if(ratingList.size>0){
+            var scoreSum: Double = 0.0
+            for (rating in ratingList) {
+                scoreSum += rating.score!!
+            }
+
+
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.DOWN
+            val roundoff = df.format(scoreSum / ratingList.size.toDouble())
+
+            binding.tvCafeRating.text = (roundoff).toString()
         }
-
-
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.DOWN
-        val roundoff = df.format(scoreSum / ratingList.size.toDouble())
-
-        binding.tvCafeRating.text = (roundoff).toString()
+        else{
+            binding.tvCafeRating.text = "0";
+        }
     }
 
     fun calculatePassingTime(ratingDate: Date) : Long?{

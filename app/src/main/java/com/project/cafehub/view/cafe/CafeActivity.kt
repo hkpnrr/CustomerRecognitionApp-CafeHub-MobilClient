@@ -171,17 +171,24 @@ class CafeActivity : AppCompatActivity() {
     }
 
     fun editCafeRating() {
-        var scoreSum: Double = 0.0
-        for (rating in ratingList) {
-            scoreSum += rating.score!!
+
+        if(ratingList.size>0){
+            var scoreSum: Double = 0.0
+            for (rating in ratingList) {
+                scoreSum += rating.score!!
+            }
+
+
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.DOWN
+            val roundoff = df.format(scoreSum / ratingList.size.toDouble())
+
+            binding.textViewCafeRate.text = (roundoff).toString()
+        }
+        else{
+            binding.textViewCafeRate.text = "0";
         }
 
-
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.DOWN
-        val roundoff = df.format(scoreSum / ratingList.size.toDouble())
-
-        binding.textViewCafeRate.text = (roundoff).toString()
     }
 
     fun displayMinPrice(){
