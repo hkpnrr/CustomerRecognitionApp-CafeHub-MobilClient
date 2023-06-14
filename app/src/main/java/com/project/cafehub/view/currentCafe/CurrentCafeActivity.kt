@@ -16,10 +16,8 @@ import com.project.cafehub.R
 import com.project.cafehub.databinding.ActivityCurrentCafeBinding
 import com.project.cafehub.model.Cafe
 import com.project.cafehub.model.CurrentUser
-import com.project.cafehub.view.cafe.CafeActivity
+import com.project.cafehub.model.CurrentUser.user
 import com.project.cafehub.view.chat.ChatActivity
-import com.project.cafehub.view.homePage.HomeFragment
-import com.project.cafehub.view.homePage.QrFragment
 
 class CurrentCafeActivity : AppCompatActivity() {
 
@@ -27,6 +25,9 @@ class CurrentCafeActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var currentCafe: Cafe
     private var userPaymentId:String=""
+    private var userAccessToken: String? = null
+    private var refreshToken: String? = null
+    private var tokenExpirationTime: Long? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +40,23 @@ class CurrentCafeActivity : AppCompatActivity() {
 
         replaceFragment(ActiveUserListFragment())
         initToolbar()
+        getUserAccessTokenInfo()
 
         binding.navBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.social -> replaceFragment(ActiveUserListFragment())
-                R.id.spotify -> replaceFragment(SpotifyFragment())
+                R.id.spotify -> {
+                    if (userAccessToken.isNullOrEmpty()) {
+                        replaceFragment(SpotifyFragment())
+                    } else {
+                        val intent = Intent(this, SpotifyActivity::class.java)
+                        intent.putExtra("currentCafe", currentCafe)
+                        intent.putExtra("userAccessToken", userAccessToken)
+                        intent.putExtra("refreshToken", refreshToken)
+                        intent.putExtra("tokenExpirationTime", tokenExpirationTime)
+                        startActivity(intent)
+                    }
+                }
                 R.id.recommendation->replaceFragment(CurrentCafeRecommendationFragment())
             }
             true
@@ -67,6 +80,19 @@ class CurrentCafeActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+    }
+
+    fun getUserAccessTokenInfo() {
+        db.collection("User").document(user.id!!).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    userAccessToken = document.get("userAccessToken") as String?
+                    refreshToken = document.get("refreshToken") as String?
+                    tokenExpirationTime = document.get("tokenExpirationTime") as Long
+                }
+            }.addOnFailureListener{
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
