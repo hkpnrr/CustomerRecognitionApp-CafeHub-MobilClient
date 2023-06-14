@@ -326,7 +326,7 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                 if(it.isEmpty){
 
                     db.collection("User").document(CurrentUser.user.id.toString())
-                        .update("paymentId",randomPaymentId).addOnSuccessListener {
+                        .update("paymentId",randomPaymentId.toString()).addOnSuccessListener {
 
                         }
                         .addOnFailureListener {
@@ -334,7 +334,6 @@ class QrFragment : Fragment(R.layout.fragment_qr) {
                         }
                 }
                 else{
-                    println("GİRDİ BAŞKAN")
                     generateRandomPaymentId(scannedCafeId)
                 }
 
