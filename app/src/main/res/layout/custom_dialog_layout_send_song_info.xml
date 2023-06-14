@@ -5,21 +5,21 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Siparişinizin tanımlanabilmesi için kişisel kodunuz: "
-        android:textSize="20dp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:gravity="center"/>
-    <TextView
-        android:id="@+id/paymentIdTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Başlık"
-        android:textSize="40sp"
+        android:text="Oynatma sırasına istediğim şarkıyı nasıl ekleyebilirim?\n"
+        android:textSize="25sp"
         android:textColor="#E67917"
         android:textStyle="bold"
         android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_song_description"
+        android:textSize="17dp"
+        android:textColor="@android:color/black"/>
+
+
 
 </LinearLayout>
