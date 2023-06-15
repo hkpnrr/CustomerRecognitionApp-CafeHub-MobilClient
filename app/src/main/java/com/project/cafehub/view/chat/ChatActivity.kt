@@ -70,7 +70,8 @@ class ChatActivity : AppCompatActivity() {
 
     fun  redirectToFriendshipRequests(view:View){
         val intent = Intent(this@ChatActivity,FriendshipRequestsActivity::class.java)
-        startActivity(intent);
+        startActivity(intent)
+        finish()
     }
 
     private fun initRvAdapter(){

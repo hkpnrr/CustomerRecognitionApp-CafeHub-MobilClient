@@ -36,6 +36,8 @@ class FriendshipActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun initToolbar(){
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
