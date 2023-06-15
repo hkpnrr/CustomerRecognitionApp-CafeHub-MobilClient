@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#212121"
     tools:context=".view.currentCafe.SpotifyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/ivSpotifyLogo"
+        android:layout_width="230dp"
+        android:layout_height="0dp"
+        android:src="@drawable/spotify_logo_high_res"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="80dp"
+        app:layout_constraintDimensionRatio="2362:709"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvSpotifyAuthInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Merhabalar, Spotify modülünü kullanmak için öncelikle Spotify hesabınızı bağlamalısınız!"
+        android:textColor="@color/white"
+        android:textSize="21sp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivSpotifyLogo"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <Button
+        android:id="@+id/connectSpotify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/spotify_logo"
+        android:onClick="connectSpotifyClicked"
+        android:text="Spotify Hesabını Bağla"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="@id/tvSpotifyAuthInfo"
+        app:layout_constraintStart_toStartOf="@id/tvSpotifyAuthInfo"
+        app:layout_constraintTop_toBottomOf="@id/tvSpotifyAuthInfo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,7 +94,7 @@ class SignupActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Kullanıcı Kaydedildi", Toast.LENGTH_SHORT)
                                     .show()
-                                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                                val intent = Intent(this@SignupActivity, SigninActivity::class.java)
                                 startActivity(intent);
                                 finish()
                             }

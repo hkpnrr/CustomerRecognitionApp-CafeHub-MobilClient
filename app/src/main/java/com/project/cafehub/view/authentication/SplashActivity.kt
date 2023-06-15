@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun nextClicked(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, SigninActivity::class.java)
         startActivity(intent)
         finish()
     }

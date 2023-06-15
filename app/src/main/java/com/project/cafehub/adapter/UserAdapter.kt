@@ -54,6 +54,19 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                 }
             }
 
+        db.collection("FriendshipRequest")
+            .whereEqualTo("requesterId",CurrentUser.user.id.toString())
+            .whereEqualTo("addresseeId",userList[position].id.toString())
+            .whereEqualTo("isValid",true)
+            .get().addOnSuccessListener {
+                if (!it.isEmpty){
+                    //sent request
+                    holder.binding.ivAddFriend.visibility=View.INVISIBLE
+
+                }
+            }.addOnFailureListener {
+            }
+
         holder.binding.ivAddFriend.setOnClickListener {
             if(CurrentUser.user.id==userList[position].id){
                 println("Kendine istek atamazsın.")
@@ -90,6 +103,7 @@ class UserAdapter(val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdap
                                             .addOnSuccessListener {
                                             //request sent successfull
                                             println("arkadaş isteği yollandı")
+                                                holder.binding.ivAddFriend.visibility=View.INVISIBLE
                                         }.addOnFailureListener {
                                         }
                                     }

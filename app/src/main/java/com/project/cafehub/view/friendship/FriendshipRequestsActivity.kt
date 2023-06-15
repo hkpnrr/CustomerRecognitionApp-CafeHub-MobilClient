@@ -1,6 +1,7 @@
 package com.project.cafehub.view.friendship
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
@@ -13,6 +14,7 @@ import com.project.cafehub.adapter.FriendshipRequestAdapter
 import com.project.cafehub.databinding.ActivityFriendshipRequestsBinding
 import com.project.cafehub.model.CurrentUser
 import com.project.cafehub.model.FriendshipRequest
+import com.project.cafehub.view.chat.ChatActivity
 
 class FriendshipRequestsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFriendshipRequestsBinding
@@ -39,8 +41,16 @@ class FriendshipRequestsActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbar.setNavigationOnClickListener {
+            val intent = Intent(this,ChatActivity::class.java)
+            startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,ChatActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun initRvAdapter(){

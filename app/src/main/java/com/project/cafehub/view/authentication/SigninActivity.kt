@@ -19,15 +19,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.project.cafehub.R
-import com.project.cafehub.databinding.ActivityLoginBinding
+import com.project.cafehub.databinding.ActivitySigninBinding
 import com.project.cafehub.model.CurrentUser
-import com.project.cafehub.model.User
 import com.project.cafehub.view.homePage.HomePageActivity
-import java.util.*
 
-class LoginActivity : AppCompatActivity() {
+class SigninActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivitySigninBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var gsc: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
@@ -35,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivitySigninBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -104,8 +102,6 @@ class LoginActivity : AppCompatActivity() {
                             CurrentUser.user.birthdate= document.data["birthdate"] as String?
                             CurrentUser.user.isActive= document.data["isActive"] as Boolean?
                             CurrentUser.user.activeCafeId= document.data["activeCafeId"] as String?
-
-
                         }
 
                         val intent = Intent(this, HomePageActivity::class.java)

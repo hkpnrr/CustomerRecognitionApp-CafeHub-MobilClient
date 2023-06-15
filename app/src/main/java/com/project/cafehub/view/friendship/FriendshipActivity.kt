@@ -36,6 +36,8 @@ class FriendshipActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun initToolbar(){
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -56,8 +58,6 @@ class FriendshipActivity : AppCompatActivity() {
                     Filter.equalTo("secondUserId",CurrentUser.user.id.toString())))
             .get().addOnSuccessListener {
                 for (document in it){
-
-                    println("dokuman "+document.get("firstUserId").toString())
 
                     var temp = Friendship(document.get("firstUserId").toString(),
                     document.get("secondUserId").toString(),

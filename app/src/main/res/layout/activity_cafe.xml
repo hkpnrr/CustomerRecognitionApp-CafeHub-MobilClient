@@ -88,10 +88,9 @@
                         android:id="@+id/textViewCafeRate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.4"
                         android:layout_marginTop="10dp"
                         android:textSize="20dp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -113,10 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="left"
-                    android:text="min. 25tl"
-                    android:textSize="15dp"
-                    >
-                </TextView>
+                    android:textSize="15dp"></TextView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
